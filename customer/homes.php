@@ -294,87 +294,186 @@
 
   <div class="other-main">
 
-    <div class="other-container">
+    <!-- <div class="other-container"> -->
       <!-- single container -->
-      <div class="single-container">
-        <div class="image">
-          <img src="../assets/tomato.png" alt="" />
-        </div>
-        <h5 class="title">Fresh Roma Tomato</h5>
-        <span class="size">3 lb bag</span>
-        <p class="price">$20.00</p>
-        <a href=""><div class="btn">Add +</div></a>
-      </div>
+      <div class="product-lists">
 
-      <div class="single-container">
-        <div class="image">
-          <img src="../assets/tomato.png" alt="" />
-        </div>
-        <h5 class="title">Fresh Roma Tomato</h5>
-        <span class="size">3 lb bag</span>
-        <p class="price">$20.00</p>
-        <a href=""><div class="btn">Add +</div></a>
-      </div>
+        <div class="single">
+            <div class="img">
+                <img src="../assets/blac.png" alt="" />
+                
+                <div class="tag">
+                    <div class="offer">Offer</div>
+                    <div class="outofstock">out of stock</div>
+                </div>
+                
+            </div>
+            <div class="content">
+                <h5>Fresh Blackberries</h5>
+                <span class="piece">24 PieceS</span>
 
-      <div class="single-container">
-        <div class="image">
-          <img src="../assets/tomato.png" alt="" />
+                <div class="price">
+                <span class="cut">$50.00</span>
+                <span class="main">$20.00</span>
+                </div>
+                <a href=""><div class="btn">Add +</div></a>
+            </div>
         </div>
-        <h5 class="title">Fresh Roma Tomato</h5>
-        <span class="size">3 lb bag</span>
-        <p class="price">$20.00</p>
-        <a href=""><div class="btn">Add +</div></a>
-      </div>
 
-      <div class="single-container">
-        <div class="image">
-          <img src="../assets/tomato.png" alt="" />
-        </div>
-        <h5 class="title">Fresh Roma Tomato</h5>
-        <span class="size">3 lb bag</span>
-        <p class="price">$20.00</p>
-        <a href=""><div class="btn">Add +</div></a>
-      </div>
+        <div class="single">
+            <div class="img">
+                <img src="../assets/blac.png" alt="" />
+                
+                <div class="tag">
+                    <div class="offer">Offer</div>
+                    <div class="outofstock">out of stock</div>
+                </div>
+                
+            </div>
+            <div class="content">
+                <h5>Fresh Blackberries</h5>
+                <span class="piece">24 PieceS</span>
 
-      <div class="single-container">
-        <div class="image">
-          <img src="../assets/tomato.png" alt="" />
+                <div class="price">
+                <span class="cut">$50.00</span>
+                <span class="main">$20.00</span>
+                </div>
+                <a href=""><div class="btn">Add +</div></a>
+            </div>
         </div>
-        <h5 class="title">Fresh Roma Tomato</h5>
-        <span class="size">3 lb bag</span>
-        <p class="price">$20.00</p>
-        <a href=""><div class="btn">Add +</div></a>
-      </div>
 
-      <div class="single-container">
-        <div class="image">
-          <img src="../assets/tomato.png" alt="" />
-        </div>
-        <h5 class="title">Fresh Roma Tomato</h5>
-        <span class="size">3 lb bag</span>
-        <p class="price">$20.00</p>
-        <a href=""><div class="btn">Add +</div></a>
-      </div>
+        <div class="single">
+            <div class="img">
+                <img src="../assets/blac.png" alt="" />
+                
+                <div class="tag">
+                    <div class="offer">Offer</div>
+                    <div class="outofstock">out of stock</div>
+                </div>
+                
+            </div>
+            <div class="content">
+                <h5>Fresh Blackberries</h5>
+                <span class="piece">24 PieceS</span>
 
-      <div class="single-container">
-        <div class="image">
-          <img src="../assets/tomato.png" alt="" />
+                <div class="price">
+                <span class="cut">$50.00</span>
+                <span class="main">$20.00</span>
+                </div>
+                <a href=""><div class="btn">Add +</div></a>
+            </div>
         </div>
-        <h5 class="title">Fresh Roma Tomato</h5>
-        <span class="size">3 lb bag</span>
-        <p class="price">$20.00</p>
-        <a href=""><div class="btn">Add +</div></a>
-      </div>
 
-      <div class="single-container">
-        <div class="image">
-          <img src="../assets/tomato.png" alt="" />
+        <div class="single">
+            <div class="img">
+                <img src="../assets/blac.png" alt="" />
+                
+                <div class="tag">
+                    <div class="offer">Offer</div>
+                    <div class="outofstock">out of stock</div>
+                </div>
+                
+            </div>
+            <div class="content">
+                <h5>Fresh Blackberries</h5>
+                <span class="piece">24 PieceS</span>
+
+                <div class="price">
+                <span class="cut">$50.00</span>
+                <span class="main">$20.00</span>
+                </div>
+                <a href=""><div class="btn">Add +</div></a>
+            </div>
         </div>
-        <h5 class="title">Fresh Roma Tomato</h5>
-        <span class="size">3 lb bag</span>
-        <p class="price">$20.00</p>
-        <a href=""><div class="btn">Add +</div></a>
-      </div>
+
+        <div class="single">
+            <div class="img">
+                <img src="../assets/blac.png" alt="" />
+                
+                <div class="tag">
+                    <div class="offer">Offer</div>
+                    <div class="outofstock">out of stock</div>
+                </div>
+                
+            </div>
+            <div class="content">
+                <h5>Fresh Blackberries</h5>
+                <span class="piece">24 PieceS</span>
+
+                <div class="price">
+                <span class="cut">$50.00</span>
+                <span class="main">$20.00</span>
+                </div>
+                <a href=""><div class="btn">Add +</div></a>
+            </div>
+        </div>
+
+        <div class="single">
+            <div class="img">
+                <img src="../assets/blac.png" alt="" />
+                
+                <div class="tag">
+                    <div class="offer">Offer</div>
+                    <div class="outofstock">out of stock</div>
+                </div>
+                
+            </div>
+            <div class="content">
+                <h5>Fresh Blackberries</h5>
+                <span class="piece">24 PieceS</span>
+
+                <div class="price">
+                <span class="cut">$50.00</span>
+                <span class="main">$20.00</span>
+                </div>
+                <a href=""><div class="btn">Add +</div></a>
+            </div>
+        </div>
+
+        <div class="single">
+            <div class="img">
+                <img src="../assets/blac.png" alt="" />
+                
+                <div class="tag">
+                    <div class="offer">Offer</div>
+                    <div class="outofstock">out of stock</div>
+                </div>
+                
+            </div>
+            <div class="content">
+                <h5>Fresh Blackberries</h5>
+                <span class="piece">24 PieceS</span>
+
+                <div class="price">
+                <span class="cut">$50.00</span>
+                <span class="main">$20.00</span>
+                </div>
+                <a href=""><div class="btn">Add +</div></a>
+            </div>
+        </div>
+
+        <div class="single">
+            <div class="img">
+                <img src="../assets/blac.png" alt="" />
+                
+                <div class="tag">
+                    <div class="offer">Offer</div>
+                    <div class="outofstock">out of stock</div>
+                </div>
+                
+            </div>
+            <div class="content">
+                <h5>Fresh Blackberries</h5>
+                <span class="piece">24 PieceS</span>
+
+                <div class="price">
+                <span class="cut">$50.00</span>
+                <span class="main">$20.00</span>
+                </div>
+                <a href=""><div class="btn">Add +</div></a>
+            </div>
+        </div>
+
 
     </div>
 
