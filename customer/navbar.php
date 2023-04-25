@@ -140,8 +140,8 @@
             while($row = oci_fetch_array($stid,OCI_ASSOC)){
                 $c_id = $row['CATEGORY_ID'];
                 $c_name = $row['CATEGORY_NAME'];
-                
-               echo "<a href='#'>
+  
+               echo "<a href='products.php?cat_id=$c_id'>
                         <label class='category-link'><p>".$c_name."</p><p>▼</p> </label> 
                     </a>";
             }

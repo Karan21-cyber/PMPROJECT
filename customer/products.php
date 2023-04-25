@@ -1,3 +1,10 @@
+<!-- <?php
+
+    if(isset($_GET['p_id'])){
+        echo $_GET['p_id'];
+    }
+?> -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/indexs.css" />
+    <link rel="stylesheet" href="css/indeex.css" />
 
 </head>
 <body>
@@ -17,16 +24,33 @@
     
     <div class="product-container">
         <div class="product-header">
-            <h3>Product Lists</h3>
+            <h3>Product Lists of <?php 
+                $sql='SELECT CATEGORY_NAME FROM CATEGORY WHERE CATEGORY_ID= :c_id';
+                $stid = oci_parse($connection,$sql);
+                oci_bind_by_name($stid,':c_id' ,$_GET['cat_id']);
+                oci_execute($stid);
+                while($row = oci_fetch_array($stid,OCI_ASSOC)){
+                    $cat_name = $row['CATEGORY_NAME'];
+                }
+                echo strtoupper($cat_name);
+            ?></h3>
         </div>
 
     <div class="product-lists">
 
         <?php
-            $sql='SELECT * FROM PRODUCT';
-            $stid = oci_parse($connection,$sql);
+            if(isset($_GET['cat_id'])){
+                $sql='SELECT * FROM PRODUCT WHERE CATEGORY_ID= :c_id';
+                $stid = oci_parse($connection,$sql);
+                oci_bind_by_name($stid, ':c_id' ,$_GET['cat_id']);
+            }
+            else{
+                $sql='SELECT * FROM PRODUCT';
+                $stid = oci_parse($connection,$sql);
+            }
+           
             oci_execute($stid);
-
+            
             while($row = oci_fetch_array($stid,OCI_ASSOC)){
                 $product_name=$row['PRODUCT_NAME'];
                 $product_id = $row['PRODUCT_ID'];
@@ -42,7 +66,8 @@
                 }
                 $product_stock = $row['STOCK_NUMBER'];
 
-                echo "<div class='single'>";
+
+                echo "<div class='single' onclick='viewproduct($product_id)'>";
                     echo "<div class='img'>";
                         echo "<img src=\"../db/uploads/products/".$product_image."\" alt='$product_name' /> ";
                         //    echo "<div class='tag'>";
@@ -94,5 +119,12 @@
     <?php
         require('footer.php');
     ?>  
+
+    <!-- <script>
+        function viewproduct(p_id){
+            var product_id = p_id;
+            window.location.href="products.php?p_id=product_id";
+        }
+    </script> -->
 </body>
 </html>

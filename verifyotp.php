@@ -30,7 +30,8 @@
         if($errcount == 0 ){
                 $role = $_GET['page'];
                 
-                if($role == 'customer'){
+                if($role === 'customer'){
+
                     $verify = 'verified';
                     $sql = "UPDATE USER_I SET VERIFIED= :verify WHERE EMAIL= :uemail ";
                     $stid = oci_parse($connection,$sql);
@@ -40,9 +41,11 @@
                     if(oci_execute($stid)){
                         header('location:login.php');
                     }
+
                 }
 
-                if($role == 'trader'){  
+                if($role === 'trader'){
+                      
                     $verified='pending';
                     $sql1 = "UPDATE USER_I SET VERIFIED = :verify WHERE EMAIL = :uemail";
                     $stid1 = oci_parse($connection,$sql1);
