@@ -82,8 +82,8 @@
 
             if($errcount == 0)
             {
-                if($utype=="image/jpeg" || $utype=="image/jpg" || $utype=="image/png" || $utype=="image/gif" || $utype=="image/webp")
-                {
+                // if($utype=="image/jpeg" || $utype=="image/jpg" || $utype=="image/png" || $utype=="image/gif" || $utype=="image/webp")
+                // {
                     $sql = "INSERT INTO SHOP (SHOP_ID,USER_ID,SHOP_NAME,SHOP_TYPE,SHOP_IMAGE,CONTACT,EMAIL,SHOP_LOGO) 
                         VALUES (:shop_id,:user_id,:name, :category, :image,:phone,:email,:logo )";
 
@@ -107,10 +107,10 @@
                             echo "Unable to insert file";
                         }     
                     }
-                }
-                else{
-                    $errimage ="Image type doesnot match";
-                }
+                // }
+                // else{
+                    // $errimage ="Image type doesnot match";
+                // }
             }
            
         }
