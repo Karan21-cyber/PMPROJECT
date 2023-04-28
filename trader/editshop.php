@@ -34,9 +34,7 @@
             $ephone = $row['CONTACT'];
             $eimage = $row['SHOP_IMAGE'];
             $elogo = $row['SHOP_LOGO']; 
-           
-            
-            
+                  
         }          
     
     ?>

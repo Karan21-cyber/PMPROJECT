@@ -25,9 +25,6 @@
           $utmplogo = $_FILES['shoplogo']['tmp_name'];
 
           $usize = $_FILES['shopimage']['size'];
-          $ulocation = "../db/uploads/shops/".$image;
-          $ulocationlogo = "../db/uploads/shops/".$logo;
-
           $ulocationimg = "../db/uploads/shops/".$image;
           $ulocationlogo = "../db/uploads/shops/".$logo;
           
@@ -45,8 +42,7 @@
             oci_bind_by_name($stid ,':phone',$phone);
             oci_bind_by_name($stid , ':logo' ,$logo);
             
-            if(unlink("../db/uploads/shops/".$previous) && unlink("../db/uploads/shops/".$previouslogo)){
-              if(move_uploaded_file($utmpname,$ulocation) && move_uploaded_file($utmplogo,$ulocationlogo) ){
+            if(unlink("../db/uploads/shops/".$previousimage) && unlink("../db/uploads/shops/".$previouslogo)){
               if(move_uploaded_file($utmpname,$ulocationimg) && move_uploaded_file($utmplogo,$ulocationlogo) ){
                 if(oci_execute($stid)){
                     header('location:traderdashboard.php?cat=Shoplist');
@@ -117,6 +113,5 @@
             }
           }         
       }
-    }
 
 ?>
