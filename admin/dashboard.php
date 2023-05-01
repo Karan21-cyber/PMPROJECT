@@ -37,8 +37,8 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
     />
-    <link rel="stylesheet" href="css/dashb.css" />
-    <link rel="stylesheet" href="css/overview.css" />
+    <link rel="stylesheet" href="css/dashbo.css" />
+    <link rel="stylesheet" href="css/overviews.css" />
     
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
@@ -131,15 +131,14 @@
               menu
             </span>
 
-            <h5 id="link">
+            <h5 id="get-link">
               <?php
                 if(isset($_GET['cat'])){
                   $links = $_GET['cat'];
                   echo  $links;                  
                 }
                 else{
-                  echo "<p>Home ></p>
-                  Overview";
+                  echo "Dashboard Overview";
                 }
               ?>
               
@@ -152,9 +151,7 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false">
                 <?php  
-
-                //   echo $_SESSION['username']; 
-                echo "ADMIN";
+                  echo "ADMIN";
                 ?> </h3>              
             <div>
               <ul class="dropdown-menu setting">

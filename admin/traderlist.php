@@ -37,10 +37,10 @@
             echo "<td>".$row['CATEGORY'] ."</td>";
             echo "<td>".$row['VERIFY'] ."</td>";
             
-            if(empty($row['STATUS'])){
+            if($row['STATUS'] == 'off'){
                 echo "<td id='red'>active</td>";
             }
-            else{
+            else if($row['STATUS'] == 'on'){
                 echo "<td id='green'>active</td>";
             }
             if($verify == 'pending'){

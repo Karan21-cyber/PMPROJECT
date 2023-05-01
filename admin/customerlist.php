@@ -31,10 +31,10 @@
             echo "<td>".$row['CONTACT'] ."</td>";
             echo "<td>".$row['VERIFY'] ."</td>";
             
-            if(empty($row['STATUS'])){
+            if($row['STATUS'] == 'off'){
                 echo "<td id='red'>active</td>";
             }
-            else{
+            else if($row['STATUS'] == 'on'){
                 echo "<td id='green'>active</td>";
             }
             echo "<td>". "<a href=editUser.php?id=$id&action=edit> Edit </a>"."</td>";
