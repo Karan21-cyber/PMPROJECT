@@ -38,10 +38,10 @@
             echo "<td>".$row['VERIFY'] ."</td>";
             
             if($row['STATUS'] == 'off'){
-                echo "<td id='red'>active</td>";
+                echo "<td id='red'>offline</td>";
             }
             else if($row['STATUS'] == 'on'){
-                echo "<td id='green'>active</td>";
+                echo "<td id='green'>online</td>";
             }
             if($verify == 'pending'){
             echo "<td> <div class='action'>".

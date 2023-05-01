@@ -71,6 +71,7 @@
     }
 
     if(isset($_POST['sendemail'])){
+        
         $femail = $_POST['email'];
         $_SESSION['email']=$femail;
 

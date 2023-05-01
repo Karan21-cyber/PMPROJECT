@@ -1,6 +1,6 @@
 <?php
 
-    $to      = $femail;
+    $to      = $femail; 
     $subject = $sub;
     $message = $message;
     $headers = 'From: cleckfreshmart@gmail.com' . "\r\n" .'Reply-To: cleckfreshmart@gmail.com';

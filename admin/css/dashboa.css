@@ -253,7 +253,7 @@ body{
 }  
 
 #green{
-    color: greenyellow;
+    color: rgb(31, 175, 70);
 }
 
 #decline{
@@ -265,6 +265,7 @@ body{
     border-radius: 5px;
     color: rgb(255, 255, 255);
 }
+
 .user-container table{
     color: black;
     border: none;

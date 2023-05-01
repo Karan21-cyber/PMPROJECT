@@ -18,8 +18,6 @@
         <th>Contact</th>
         <th>Verified</th>
         <th>Status</th>
-        <th>Edit</th>
-        <th>Delete</th>
         </tr>";
         while($row = oci_fetch_array($stid,OCI_ASSOC)){
             $id = $row['USER_ID'];
@@ -32,13 +30,11 @@
             echo "<td>".$row['VERIFY'] ."</td>";
             
             if($row['STATUS'] == 'off'){
-                echo "<td id='red'>active</td>";
+                echo "<td id='red'>offline</td>";
             }
             else if($row['STATUS'] == 'on'){
-                echo "<td id='green'>active</td>";
+                echo "<td id='green'>online</td>";
             }
-            echo "<td>". "<a href=editUser.php?id=$id&action=edit> Edit </a>"."</td>";
-            echo "<td>". "<a href=deleteUser.php?id=$id&action=delete> Delete</a>"."</td>";
             echo "</tr>";
             
         }
