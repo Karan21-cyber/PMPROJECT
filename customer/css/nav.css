@@ -234,7 +234,7 @@ scrollbar-width: none;  /* Firefox */
 }
 
 .profile{
-  width: 30px;
+  width: 40px;
   border-radius: 50%;
   border: 3px solid var(--yellow);
 }

@@ -138,7 +138,6 @@
                   />
                   <ul class='dropdown-menu'>
                     <li><a class='dropdown-item' href='#'>Profile</a></li>
-                    <li><a class='dropdown-item' href='#'>Setting</a></li>
                     <li><a class='dropdown-item' href='../db/logout.php'>Logout</a></li>
                     </ul>
           </div> ";

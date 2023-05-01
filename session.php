@@ -5,6 +5,7 @@ include("db/connection.php");
 if(isset($_SESSION['token'])){
     $user = $_SESSION['ID'];
     $_SESSION['userID'] = $user['USER_ID'];
+    $_SESSION['pname']=$user['FIRST_NAME'];
     $_SESSION['role'] = $user['ROLE'];
     $_SESSION['type'] = $user['CATEGORY'];
 
