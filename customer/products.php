@@ -127,7 +127,6 @@
         }
     </script>
 
-<script src="addtocart.js"></script>
 
 </body>
 </html>

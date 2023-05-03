@@ -4,7 +4,6 @@
     session_start();
     include('db/connection.php');       
 
-    // echo $_SESSION['otp'];
     // for login purpose
     $err = $erremail= $errpassword = $errrole ='';
 
@@ -47,6 +46,11 @@
 
             oci_execute($stid);
             
+            // unset session variable
+            unset($_SESSION['token']);
+            unset($_SESSION['ID']);
+            unset($_SESSION['error']);
+
             // generate token
             $token_length = 32;
             $token = base64_encode(random_bytes($token_length));
@@ -71,7 +75,10 @@
     }
 
     if(isset($_POST['sendemail'])){
-        
+        // unset session variable
+        unset($_SESSION['email']);
+        unset($_SESSION['otp']);
+
         $femail = $_POST['email'];
         $_SESSION['email']=$femail;
 

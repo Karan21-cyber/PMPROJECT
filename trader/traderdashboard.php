@@ -6,7 +6,7 @@
   $sql = 'SELECT * FROM USER_I WHERE USER_ID= :id ';
   $stid = oci_parse($connection,$sql);
 
-  oci_bind_by_name($stid,':id',$_SESSION['userID']);
+  oci_bind_by_name($stid,':id',$_SESSION['traderID']);
 
   oci_execute($stid);
   
@@ -182,7 +182,7 @@
                 ?> </h3>              
             <div>
               <ul class="dropdown-menu setting">
-                <li><a class="dropdown-item" href="traderdashboard.php?cat=Profile&name=Home">Profile</a></li>
+                <li><a class="dropdown-item" href="traderdashboard.php?cat=Profile&name=Home&role=trader">Profile</a></li>
                 <li>
                 <label class="dropdown-item dropdown-toggle" 
                   onmouseover="onMouse('Profile')"
@@ -191,7 +191,7 @@
                   aria-expanded="false">Setting</label>
                 <div>
                   <ul class="dropdown-menu" id='setting'>
-                    <li><a class="dropdown-item" href="traderdashboard.php?cat=UpdateProfile&name=Home">Update Profile</a></li>
+                    <li><a class="dropdown-item" href="traderdashboard.php?cat=UpdateProfile&name=Home&role=trader">Update Profile</a></li>
                     <li><a class="dropdown-item" href="../profile/deactivate/php">Deactivate</a></li>
                   </ul>
                 </div>

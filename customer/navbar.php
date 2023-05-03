@@ -61,7 +61,7 @@
 
       <div class="links-container">
         <?php
-           if(empty($_SESSION['token'])){
+           if(empty($_SESSION['userID'])){
             $par = 'show';
             ?>
             <div class='links-btn'>
@@ -90,16 +90,13 @@
           <!-- Cart -->
           <!-- <a href="cartpage.php"> -->
             <div onclick='cartfunction()'>
-              <b class="number" id='countcart'>
+              <b class="number" >
                 <!-- <?php
 
                   $number =0;
                   echo $number;
                 ?> -->
                 0
-                <script>
-                  document.getElementById("countcart").innerHTML = localStorage.getItem("cartcount");
-                </script>
               </b>
               <span class="material-symbols-outlined"> shopping_cart </span>
               <p class="icon">Cart</p>
@@ -109,14 +106,11 @@
           <!-- Wishlist -->
           <!-- <a href="wishlist.php"> -->
             <div onclick='wishlistfunction()'>
-              <b class="number" id='countwishlist'>
+              <b class="number" >
                 <!-- <?php
                   echo $number;
                 ?> -->
                 0
-                <script>
-                  document.getElementById("countwishlist").innerHTML =localStorage.getItem("wishlistcount");
-                </script>
               </b>
               <span class="material-symbols-outlined"> favorite </span>
 
@@ -125,7 +119,7 @@
           <!-- </a> -->
 
           <?php
-            if(isset($_SESSION['token'])){
+            if(isset($_SESSION['userID'])){
               echo "
               <div>
                   <img
@@ -137,7 +131,7 @@
                     alt=''
                   />
                   <ul class='dropdown-menu'>
-                    <li><a class='dropdown-item' href='profile.php'>Profile</a></li>
+                    <li><a class='dropdown-item' href='profile.php?role=customer'>Profile</a></li>
                     <li><a class='dropdown-item' href='../db/logout.php'>Logout</a></li>
                     </ul>
           </div> ";
@@ -205,7 +199,7 @@
       <div class="offcanvas-body">
     <!-- Off canvas part -->
         <?php
-          if(empty($_SESSION['token'])){
+          if(empty($_SESSION['userID'])){
             echo "
             <div class='create'>
               <a href='../login.php'>Login</a>
@@ -229,10 +223,10 @@
         
 
         <?php
-          if(isset($_SESSION['token'])){
+          if(isset($_SESSION['userID'])){
             echo "
             <div class='create'>
-              <a href='profile.php'>Profile</a>
+              <a href='profile.php?role=customer'>Profile</a>
               <a href='#'>Setting</a>
               <a href='../db/logout.php'>Logout</a> 
             </div> ";
@@ -285,14 +279,10 @@
     <script>
 
       function cartfunction(){
-        var carts= [];
-        carts =localStorage.getItem("cartItem");
         document.location.href='cartpage.php';
       }
 
       function wishlistfunction(){
-        var wishlists= [];
-        wishlists = localStorage.getItem("wishlistItem");
         document.location.href='wishlist.php';
       }
     </script>
