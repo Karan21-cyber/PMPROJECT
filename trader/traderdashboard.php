@@ -2,7 +2,7 @@
  session_start();
  include("../db/connection.php");
  
- if($_SESSION['token']){
+ if($_SESSION['traderID']){
   $sql = 'SELECT * FROM USER_I WHERE USER_ID= :id ';
   $stid = oci_parse($connection,$sql);
 
@@ -192,7 +192,7 @@
                 <div>
                   <ul class="dropdown-menu" id='setting'>
                     <li><a class="dropdown-item" href="traderdashboard.php?cat=UpdateProfile&name=Home&role=trader">Update Profile</a></li>
-                    <li><a class="dropdown-item" href="../profile/deactivate/php">Deactivate</a></li>
+                    <li><a class="dropdown-item" href="deactivate/php">Deactivate</a></li>
                   </ul>
                 </div>
               </li>
@@ -236,10 +236,10 @@
                 require_once('editshop.php');
               }
               if($links == "Profile"){
-                require_once('../profile/profilepage.php');
+                require_once('profilepage.php');
               }
               if($links == "UpdateProfile"){
-                require_once('../profile/editprofile.php');
+                require_once('editprofile.php');
               } 
             }
             else{
@@ -357,7 +357,7 @@
           </div>
 
           <div class="logout">
-            <a href="#">LOGOUT</a>
+            <a href="../db/logout.php">LOGOUT</a>
           </div>
           <div id='result'></div>
         </div>

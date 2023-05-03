@@ -61,7 +61,7 @@
 
       <div class="links-container">
         <?php
-           if(empty($_SESSION['userID'])){
+           if(empty($_SESSION['token'])){
             $par = 'show';
             ?>
             <div class='links-btn'>
@@ -119,7 +119,7 @@
           <!-- </a> -->
 
           <?php
-            if(isset($_SESSION['userID'])){
+            if(isset($_SESSION['token'])){
               echo "
               <div>
                   <img
@@ -199,7 +199,7 @@
       <div class="offcanvas-body">
     <!-- Off canvas part -->
         <?php
-          if(empty($_SESSION['userID'])){
+          if(empty($_SESSION['token'])){
             echo "
             <div class='create'>
               <a href='../login.php'>Login</a>
@@ -223,7 +223,7 @@
         
 
         <?php
-          if(isset($_SESSION['userID'])){
+          if(isset($_SESSION['token'])){
             echo "
             <div class='create'>
               <a href='profile.php?role=customer'>Profile</a>
@@ -235,8 +235,6 @@
             echo "";
           }
         ?>
-          
-
       </div>
     </div>
 

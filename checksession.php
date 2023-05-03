@@ -1,7 +1,8 @@
 <?php
 session_start();
+// unset($_SESSION['token']);
     echo "ID :". $_SESSION['ID'];
-    echo "user ID :" .$_SESSION['userID'];
+    echo "user ID :" . $_SESSION['userID'];
     echo"otp :". $_SESSION['otp'];
     echo "\nemail :".$_SESSION['email'];
     echo "\ntrader id :" .$_SESSION['traderID'];
@@ -12,4 +13,5 @@ session_start();
     echo "\ncategory: ".$_SESSION['type'];
     echo "\nusername :".$_SESSION['username'];
     echo "\n shop id: ". $_SESSION['shop_id'];
+
 ?>
