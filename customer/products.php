@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/index.css" />
-
 </head>
 <body>
     <div class="nav-bar">
@@ -28,12 +27,21 @@
                     }
                 }
                 if(isset($_GET['cat_name'])){
-                    $cat_name = $_GET['cat_name'];
+                    $cat_name = $_GET['cat_name'];   
                 }
-                
+                if(isset($_GET['s_name'])){
+                    $cat_name = $_GET['s_name'];
+                }
                 echo "<span>".strtoupper($cat_name)."</span>";
-
+                
             ?> Products Lists </h3>
+            <!-- <form action=""> -->
+            <select name="filter" id="" onchange='clickOnchange()'>
+                <option value="all">ALL</option>
+                <option value="asce">ALL</option>
+                <option value="desc">ALL</option>
+            </select>
+            <!-- </form> -->
         </div>
 
     <div class="product-lists">
@@ -50,10 +58,15 @@
                     $stid = oci_parse($connection,$sql);
                 }
             }
-            else{
-                $sql='SELECT * FROM PRODUCT';
+            if(isset($_GET['s_id'])){
+                $sql='SELECT * FROM PRODUCT WHERE SHOP_ID= :s_id';
                 $stid = oci_parse($connection,$sql);
+                oci_bind_by_name($stid, ':s_id' ,$_GET['s_id']);
             }
+            // else{
+            //     $sql='SELECT * FROM PRODUCT';
+            //     $stid = oci_parse($connection,$sql);
+            // }
 
             oci_execute($stid);
             

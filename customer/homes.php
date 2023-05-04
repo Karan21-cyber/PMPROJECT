@@ -31,7 +31,7 @@
           echo "</div>";
             }
         ?>
-        
+
   </div>
 
   <!-- shops -->
@@ -52,7 +52,8 @@
         $shop_name = $row['SHOP_NAME'];
         $shop_desc = $row['SHOP_DESC'];
 
-        echo "<div class='single'>";
+        echo "<a href='products.php?s_name=$shop_name&s_id=$shop_id' class='single'>";
+        echo "<div>";
             echo "<div class='img'>";
               echo "<img src=\"../db/uploads/shops/".$shop_image."\" alt='$shop_name' /> ";
             echo "</div>";
@@ -64,6 +65,7 @@
                 echo "<p>$shop_desc</p>";
             echo "</div>";
         echo "</div>";
+        echo "</a>";
       }
     ?>
   </div>
@@ -126,58 +128,6 @@
         <a href=""><div class="btn">Add +</div></a>
       </div>
     </div>
-
-    <div class="single">
-      <div class="img">
-        <img src="../assets/blac.png" alt="" />
-        <div class="offer">Offer</div>
-      </div>
-      <div class="content">
-        <h5>Fresh Blackberries</h5>
-        <span class="piece">24 PieceS</span>
-
-        <div class="price">
-          <span class="cut">&pound; 50.00</span>
-          <span class="main">&pound; 20.00</span>
-        </div>
-        <a href=""><div class="btn">Add +</div></a>
-      </div>
-    </div>
-
-    <div class="single">
-      <div class="img">
-        <img src="../assets/blac.png" alt="" />
-        <div class="offer">Offer</div>
-      </div>
-      <div class="content">
-        <h5>Fresh Blackberries</h5>
-        <span class="piece">24 PieceS</span>
-
-        <div class="price">
-          <span class="cut">&pound; 50.00</span>
-          <span class="main">&pound; 20.00</span>
-        </div>
-        <a href=""><div class="btn">Add +</div></a>
-      </div>
-    </div>
-
-    <div class="single">
-      <div class="img">
-        <img src="../assets/blac.png" alt="" />
-        <div class="offer">Offer</div>
-      </div>
-      <div class="content">
-        <h5>Fresh Blackberries</h5>
-        <span class="piece">24 PieceS</span>
-
-        <div class="price">
-          <span class="cut">&pound; 50.00</span>
-          <span class="main">&pound; 20.00</span>
-        </div>
-        <a href=""><div class="btn">Add +</div></a>
-      </div>
-    </div>
-
 
   </div>
 

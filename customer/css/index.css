@@ -148,6 +148,7 @@ scrollbar-width: none;  /* Firefox */
 .shop-container  .single {
   min-width:200px;
   width: 200px;
+  text-decoration: none;
 }
 
 .shop-container  .single:hover {
