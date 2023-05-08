@@ -35,7 +35,7 @@ include('../db/connection.php');
   <nav class="nav">
     <!-- logo -->
     <div class="logo">
-      <a href="homepage.php"><img src="../logo/logo.png" alt="logo" class="logo-img" /></a>
+      <a href="homepage.php"><img src="../assets/logo.png" alt="logo" class="logo-img" /></a>
     </div>
 
     <!-- Menu -->
@@ -160,7 +160,7 @@ include('../db/connection.php');
     <!-- off canvas -->
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
       <div class="offcanvas-header">
-        <a href="homepage.php"><img src="../logo/logo.png" alt="logo" class="logo-img" /></a>
+        <a href="homepage.php"><img src="../assets/logo.png" alt="logo" class="logo-img" /></a>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="line"></div>

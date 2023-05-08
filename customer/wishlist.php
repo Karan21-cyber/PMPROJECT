@@ -10,7 +10,7 @@ include('../db/connection.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="css/carts.css" />
+    <link rel="stylesheet" href="css/cart.css" />
 </head>
 
 <body>
@@ -32,21 +32,19 @@ include('../db/connection.php');
 
         <div class="cart-info">
             <h4>My Wishlist (<?php
-          if (isset($_SESSION['wishlist'])) {
-            echo count($_SESSION['wishlist']);
-          }
-          else{
-            echo '0';
-          }
-          ?> items)</h4>
+                                if (isset($_SESSION['wishlist'])) {
+                                    echo count($_SESSION['wishlist']);
+                                } else {
+                                    echo '0';
+                                }
+                                ?> items)</h4>
             <p>You have <?php
-          if (isset($_SESSION['wishlist'])) {
-            echo count($_SESSION['wishlist']);
-          }
-          else{
-            echo '0';
-          }
-          ?> items in your wishlist</p>
+                        if (isset($_SESSION['wishlist'])) {
+                            echo count($_SESSION['wishlist']);
+                        } else {
+                            echo '0';
+                        }
+                        ?> items in your wishlist</p>
         </div>
 
         <div class="wishlist-container">
@@ -62,13 +60,14 @@ include('../db/connection.php');
 
                     while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
                         $product_id = $row['PRODUCT_ID'];
+                        $product_name = $row['PRODUCT_NAME'];
 
                         echo "
                     <div class='wishlist-item'>
                         <div class='img' >
-                            <img src='../logo//apple2.webp' alt=''>
+                            <img src=\"../db/uploads/products/" . $row['PRODUCT_IMAGE'] . "\" alt='$product_name' /> 
                             <div onclick='removewishlist($product_id)'> 
-                                <span class='closebtn' >&times;</span>
+                                <span  class='closebtn' >&times;</span>
                             </div>
                         </div>
                     
@@ -84,7 +83,7 @@ include('../db/connection.php');
                 }
             }
             ?>
-                     
+
         </div>
     </div>
 

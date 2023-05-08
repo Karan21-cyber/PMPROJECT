@@ -51,7 +51,7 @@
         <div class="part1">
             <!-- logo -->
             <div class="logo">
-                <a href="dashboard.php"><img src="../logo/logo.png" alt="logo" /></a>
+                <a href="dashboard.php"><img src="../assets/logo.png" alt="logo" /></a>
             </div>
             <!-- side-links -->
             <div class="side-links">
@@ -207,7 +207,7 @@
         id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
         <div class="offcanvas-header">
             <div class="logo">
-                <a href="traderdashboard.php"><img src="../logo/logo.png" alt="logo" /></a>
+                <a href="traderdashboard.php"><img src="../assets/logo.png" alt="logo" /></a>
             </div>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>

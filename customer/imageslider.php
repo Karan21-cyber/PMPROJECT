@@ -62,12 +62,12 @@
 <body>
 
     <div class="image-slider">
-        <img class='mySlides w3-animate-opacity' src="../logo/image3.jpeg"  alt="image" />
-        <img class='mySlides w3-animate-opacity' src="../logo/image2.jpeg"  alt="image" />
-        <img class='mySlides w3-animate-opacity' src="../logo/image4.jpeg"  alt="image"/>
-        <img class='mySlides w3-animate-opacity' src="../logo/image6.jpg"  alt="image"/>
-        <img class='mySlides w3-animate-opacity' src="../logo/image5.jpeg"  alt="image"/>
-        <img class='mySlides w3-animate-opacity' src="../logo/image7.png"  alt="image"/>
+        <img class='mySlides w3-animate-opacity' src="../assets/image3.jpeg"  alt="image" />
+        <img class='mySlides w3-animate-opacity' src="../assets/image2.jpeg"  alt="image" />
+        <img class='mySlides w3-animate-opacity' src="../assets/image4.jpeg"  alt="image"/>
+        <img class='mySlides w3-animate-opacity' src="../assets/image6.jpg"  alt="image"/>
+        <img class='mySlides w3-animate-opacity' src="../assets/image5.jpeg"  alt="image"/>
+        <img class='mySlides w3-animate-opacity' src="../assets/image7.png"  alt="image"/>
     </div>
     
     <div class="image-header">

@@ -11,7 +11,7 @@ include('../db/connection.php');
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-  <link rel="stylesheet" href="css/carts.css" />
+  <link rel="stylesheet" href="css/cart.css" />
 </head>
 
 <body>
@@ -77,20 +77,11 @@ include('../db/connection.php');
             <label>" . $productname . " " . (int)$row['QUANTITY'] * $quantity . "</label>
           </div>
           <div class='qty'>
-            <h3 >1</h3>
-            <!-- icon -->
+          <h3 >1</h3>
             <div class='qty-icon'>
-    
-                <a href='#'>
-                  <span class='material-symbols-outlined'> arrow_drop_up </span>
-                </a>
-           
-                <a href='#'>
-                  <span class='material-symbols-outlined'> arrow_drop_down </span>
-             
-                </a>
-             
+              <span class='material-symbols-outlined' onclick='addquantity()'> arrow_drop_up </span>
                 
+              <span class='material-symbols-outlined' onclick='subquantity()'> arrow_drop_down </span>        
             </div>
           </div>
           <div class='price'>&#163; $productprice</div>

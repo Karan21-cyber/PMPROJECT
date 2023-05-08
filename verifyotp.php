@@ -130,15 +130,15 @@
                 if(isset($_GET['page'])){
                     $role = $_GET['page'];
                     if($role == 'customer' ){
-                        echo "<img src='logo/customer.png'  alt='customer'>";
+                        echo "<img src='assets/customer.png'  alt='customer'>";
                     }
 
                     if($role == 'trader'){  
-                        echo "<img src='logo/trader.png'  alt='trader'>";
+                        echo "<img src='assets/trader.png'  alt='trader'>";
                     }
                     
                     if($role == 'login'){  
-                        echo "<img src='logo/login.png'  alt='login'>";
+                        echo "<img src='assets/login.png'  alt='login'>";
                     }
                 }
             ?>
