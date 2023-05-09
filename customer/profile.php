@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/profile.css" />
+    <!-- <link rel="stylesheet" href="css/profile.css" /> -->
     
 </head>
 <body>
@@ -31,13 +31,13 @@
             if(isset($_GET['cat'])){
               $links = $_GET['cat'];
               if($links == "profile"){
-                require('../profile/profilepage.php'); 
+                require('profilepage.php'); 
               }
               if($links == 'update'){
-                require('../profile/editprofile.php'); 
+                require('editprofile.php'); 
               }
               if($links == 'deactivate'){
-                require('../profile/deactivate.php');
+                require('deactivate.php');
               }
               if($links == 'history'){
                 require('orderviewpage.php');
@@ -47,7 +47,7 @@
               }
             }
             else{
-              require('../profile/profilepage.php'); 
+              require('profilepage.php'); 
             }         
           ?>
 

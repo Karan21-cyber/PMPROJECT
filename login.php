@@ -5,7 +5,7 @@
     include('db/connection.php');       
 
     // for login purpose
-    $err = $erremail= $errpassword = $errrole ='';
+    $err = $erremail= $errpassword  ='';
 
     if(isset($_POST['sublogin'])){
         if(empty($_POST['email'])){
@@ -14,9 +14,9 @@
         if(empty($_POST['password'])){
             $errpassword = "Password is required";
         }
-        if(empty($_POST['role'])){
-            $errrole="User Type is required";
-        }
+        // if(empty($_POST['role'])){
+        //     $errrole="User Type is required";
+        // }
         else{
             $email = $_POST['email'];
             $password = md5(trim($_POST['password']));
@@ -34,14 +34,13 @@
 
             // for user
             // $sql = "SELECT * FROM USER_I WHERE EMAIL = :email AND PASSWORD = :pass AND ROLE = :u_role AND VERIFY = :verify ";
-            $sql = "SELECT * FROM USER_I WHERE EMAIL = :email AND PASSWORD = :pass AND ROLE = :u_role ";
+            $sql = "SELECT * FROM USER_I WHERE EMAIL = :email AND PASSWORD = :pass  ";
 
             // query from the database
             $stid = oci_parse($connection,$sql);
 
             oci_bind_by_name($stid , ':email' , $email);
             oci_bind_by_name($stid , ':pass' ,$password);
-            oci_bind_by_name($stid , ':u_role' ,$role);
             // oci_bind_by_name($stid , ':verfiy' , $verify);
 
             oci_execute($stid);
@@ -52,17 +51,14 @@
             unset($_SESSION['error']);
 
             // generate token
-            $token_length = 32;
-            $token = base64_encode(random_bytes($token_length));
-
+            
             if($data = oci_fetch_array($stid, OCI_ASSOC)) 
             {
                 $_SESSION['ID'] = $data; 
-                $_SESSION['token'] = $token;
                 header("location:session.php");
             }
             else{
-                $_SESSION['error']= 'Email, Password and Role is Invalid!!';
+                $_SESSION['error']= 'Email and Password is Invalid!!';
                 header("location:login.php");
             }
             oci_free_statement($stid);
@@ -90,7 +86,6 @@
 
         $otp_number = rand(100000,999999);
 
-
         $sub ="Verify Your Email address ";
         $message="Dear User, Your Verification Code is: ".$otp_number ." to reset your password.";      
         include_once('sendmail.php');
@@ -103,7 +98,6 @@
             $err = "Please type Registered Email to reset your password";
         }
     }
-
 ?>
 
 <!DOCTYPE html> 
@@ -122,7 +116,7 @@
         <!-- part 1 -->
         <div class='part1'>
             <div class='logo'>
-                <a href='customer/homepage.php'><img src='logo/logo.png' alt='CheckFreshMart' /></a>
+                <a href='customer/homepage.php'><img src='assets/logo.png' alt='CheckFreshMart' /></a>
             </div>
             <div class='login-text'>
                 <div>
@@ -147,10 +141,9 @@
                     <label>Password <span class='error'> * <?php echo $errpassword; ?> </span></label>
                     <input type='password' class='inputbox' placeholder='Password' name='password' />
                 
-                </div> 
+                </div>  
                 
-                
-                <div class='form-data'>
+                <!-- <div class='form-data'>
                     <label>User Type <span class='error'> * <?php echo $errrole; ?> </span></label>
                     <select class="inputbox selectoption" name='role' >
                         <option value=''>Select Role</option>
@@ -158,7 +151,7 @@
                         <option value='trader'>Trader</option>
                         <option value='admin'>Admin</option>
                     </select>
-                </div> 
+                </div>  -->
                 
                 <div class='forget-link'>
                     <div>

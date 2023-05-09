@@ -15,7 +15,7 @@
     <div class="invoice-container">
         <div class="logo">
             <h3>INVOICE</h3>
-            <img src="../logo/logo.png" alt="">
+            <img src="../assets/logo.png" alt="">
         </div>
         
         
