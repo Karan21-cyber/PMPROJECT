@@ -1,6 +1,10 @@
 <?php
 session_start();
 include('../db/connection.php');
+if (isset($_SESSION['userID'])) {
+  unset($_SESSION['cart']);
+  unset($_SESSION['wishlist']);
+}
 
 ?>
 

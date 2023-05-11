@@ -24,10 +24,10 @@
     <!-- including the image slider -->
     <div class="image-slider">
         <img class='mySlides w3-animate-opacity' src="../assets/image3.jpeg"  alt="image" />
-        <img class='mySlides w3-animate-opacity' src="../assets/image2.jpeg"  alt="image" />
-        <img class='mySlides w3-animate-opacity' src="../assets/image4.jpeg"  alt="image"/>
+        <img class='mySlides w3-animate-opacity' src="../assets/image2.jpg"  alt="image" />
+        <img class='mySlides w3-animate-opacity' src="../assets/image4.jpg"  alt="image"/>
         <img class='mySlides w3-animate-opacity' src="../assets/image6.jpg"  alt="image"/>
-        <img class='mySlides w3-animate-opacity' src="../assets/image5.jpeg"  alt="image"/>
+        <img class='mySlides w3-animate-opacity' src="../assets/image5.jpg"  alt="image"/>
         <img class='mySlides w3-animate-opacity' src="../assets/image7.png"  alt="image"/>
     </div>
     

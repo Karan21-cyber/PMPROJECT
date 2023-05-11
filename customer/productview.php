@@ -150,7 +150,7 @@ include('../db/connection.php');
                     //add to wishlist
                     // echo "<button >Add to List &#9825; </button>";
                     if (isset($_SESSION['userID'])) {
-                        echo "<button  id='add' onclick='addwishlist($p_id)'>Add to List &#9825; </button>";
+                        echo "<button  id='add' onclick='addtowishlist($p_id)'>Add to List &#9825; </button>";
                     } else {
                         echo "<button  id='addwishlist' onclick='addwishlist($p_id)'>Add to List &#9825;</button>";
                     }
