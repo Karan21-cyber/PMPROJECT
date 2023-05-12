@@ -1,6 +1,52 @@
 <?php
-  // session_start();
+  session_start();
   include('../db/connection.php');
+  $err='';
+             
+
+  if(isset($_POST['placeorder'])){
+    if(empty($_POST['selectslot'])){
+      $err = "Choose the collection Slot";
+    }
+    else{
+      unset($_SESSION['collectionslot_id']);
+
+      $collectionslot = $_POST['selectslot'];
+      $_SESSION['collectionslot_id'] = $collectionslot;
+
+      $status = 'pending';
+      $sql = "INSERT INTO ORDER_I (CART_ID,COLLECTION_SLOT_ID,STATUS,NO_OF_ITEM,TOTAL_PRICE) VALUES(:cart_id,:slot_id,:statu,:item,:price)";
+      $stids = oci_parse($connection, $sql);
+      oci_bind_by_name($stids , ":cart_id" ,$_SESSION['cart_id']);
+      oci_bind_by_name($stids, ":slot_id" , $_SESSION['collectionslot_id']);
+      oci_bind_by_name($stids, ":statu" , $status);
+      oci_bind_by_name($stids , ":item" , $_SESSION['cart_num']);
+      oci_bind_by_name($stids , ":price" , $_SESSION['totalprice']);
+      
+      if(oci_execute($stids)){
+        $status = "active";
+        // extracting the number of slot for order
+        $sqls = "SELECT * FROM COLLECTION_SLOT WHERE COLLECTION_SLOT_ID = :slot_id";
+        $stid = oci_parse($connection, $sqls);
+        oci_bind_by_name($stid, ":slot_id" ,$_SESSION['collectionslot_id']);
+        oci_execute($stid);
+        $data = oci_fetch_array($stid);
+        $orderscount = $data['NUMBER_OF_ORDER'];
+        $ordercount = (int)$orderscount-1;
+        
+        // update the number of order in collectionslot 
+        $stql = "UPDATE COLLECTION_SLOT SET NUMBER_OF_ORDER = :num_order WHERE COLLECTION_SLOT_ID = :slot_id";
+        $stmt = oci_parse($connection,$stql);
+        oci_bind_by_name($stmt , ":slot_id", $_SESSION['collectionslot_id']);
+        oci_bind_by_name($stmt , ":num_order", $ordercount);
+        oci_execute($stmt);
+
+        header('location:insertorder.php');
+
+        // echo "<script>alert('successfully inserted')</script>";
+      }
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,33 +58,29 @@
     <link rel="stylesheet" href="css/checkouts.css" />
   </head>
   <body>
-  <div class='nav-bar'>
-    <?php
-    require('navbar.php');
-    ?>
-  </div>
+ 
     <div class="checkout-container">
       <div class="checkout-part1">
         <h3>Collection Slot</h3>
-        <form>
-          <div class="collection-slot">
-            <label>Time : </label>
-            <select name="time" id="selectbox">
-              <option value="#">Select Time</option>
-              <option value="">10am to 1pm</option>
-              <option value="">1pm to 4pm</option>
-              <option value="">4pm to 7pm</option>
-            </select>
-          </div>
 
+        <form method='post' action=''>
           <div class="collection-slot">
-            <label>Day : </label>
-            <select name="day" id="selectbox">
-              <option value="#">Select Time</option>
-              <option value="">Wednesday</option>
-              <option value="">Thusday</option>
-              <option value="">Friday</option>
+            <label>Choose: </label>
+            <select name="selectslot" id="selectbox">
+              <option value="">Select Collection Slot</option>
+                <?php
+                  $status = 'active';
+                  $sql = "SELECT * FROM COLLECTION_SLOT WHERE COLLECTION_STATUS = :status";
+                  $stid = oci_parse($connection, $sql);
+                  oci_bind_by_name($stid, ":status" , $status);
+                  oci_execute($stid);
+                    while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
+                      echo "<option value=" . $row['COLLECTION_SLOT_ID'] . ">" . $row['SLOT_TIMING']." (".$row['COLLECTION_DAY']. ")</option>";
+                    }
+               
+                ?>
             </select>
+            <?php echo "<span class='error'>".$err."</span>"; ?>
           </div>
 
           <div class="order-container">
@@ -51,7 +93,6 @@
                   <th>Quantity</th>
                   <th>&#163; Price</th>
                 </tr>
-              
 
               <?php
               $productprice = 0;
@@ -97,20 +138,24 @@
               </div>
               <div class="total-items">
                 <h6>Total Payment</h6>
-                <h6><b>&#163; <?php echo $totalprice; ?></b> </h6>
+                <h6>
+                  <b>&#163; 
+                    <?php 
+                      $_SESSION['totalprice'] = $totalprice;
+                      echo $totalprice; 
+                    ?>
+                  </b> 
+                </h6>
               </div>
             </div>
             <div class="place-btn">
-              <input type="submit" name="order" value="Place Order" />
+              <input type="submit" name="placeorder" value="Place Order" />
             </div>
          
         </form>
       </div>
     </div>
 
-    <?php
-  require('footer.php');
-  ?>
-
+ 
   </body>
 </html>

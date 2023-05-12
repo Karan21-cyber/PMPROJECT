@@ -11,7 +11,7 @@
 
 .checkout-container{
     display:flex;
-    margin-top: 12%;
+    margin-top: 3%;
     flex-direction: column;
     padding-block: 2%;
     padding-inline: 2%;
@@ -234,8 +234,8 @@ h6{
         top: 60px;
         padding-inline: 1rem;
     }
-    .checkout-container{
+    /* .checkout-container{
         margin-top: 35%;
-    }
+    } */
         
 }
