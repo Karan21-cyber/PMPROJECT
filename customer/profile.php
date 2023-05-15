@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/profile.css" />
+    <!-- <link rel="stylesheet" href="css/profile.css" /> -->
     
 </head>
 <body>
@@ -21,7 +21,7 @@
             <a href="profile.php?cat=profile">Profile Information</a>
             <a href="profile.php?cat=update">Update Profile</a>
             <a href="profile.php?cat=deactivate">Deactivate</a>
-            <a href="profile.php?cat=history">View Orders</a>    
+            <!-- <a href="profile.php?cat=history">View Orders</a>     -->
             <a href="profile.php?cat=orderlist">Orders List</a>   
             <a href="../db/logout.php">Logout</a>     
         </div>

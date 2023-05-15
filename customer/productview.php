@@ -12,8 +12,23 @@ include('../db/connection.php');
     <title>Document</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    <link rel="stylesheet" href="css/productsvi.css" />
+    <!-- <link rel="stylesheet" href="css/productsvi.css" /> -->
 
+    <style>
+        .product-quantity h3 {
+            margin-top: -3px;
+            margin-left: 5px;
+        }
+
+        .product-quantity #quantity {
+            border: none;
+            outline: none;
+            width: 30px;
+            font-weight: 600;
+            background: transparent;
+
+        }
+    </style>
 </head>
 
 <body>
@@ -46,7 +61,7 @@ include('../db/connection.php');
 
     ?>
 
-    <div class="product-container">
+    <div class="productview-container">
         <div class="product-detail">
             <div class="product-part1">
                 <div class="product-image">
@@ -131,10 +146,11 @@ include('../db/connection.php');
                 <div class="product-quantity">
                     <h4>Quantity :</h4>
                     <button onclick="removequantity()">-</button>
-                    <h4 id='quantity-data'>
-                        1
-                    </h4>
-                    <button onclick="addquantity()">+</button>
+                    <h3>
+                        <input type="hidden" value='<?php echo $p_id; ?>' id='product_id'>
+                        <input type="text" min="1" max="20" value='1' id='quantity' disabled>
+                    </h3>
+                    <button onclick="addedquantity()">+</button>
                 </div>
 
                 <div class="buttons">
@@ -142,15 +158,15 @@ include('../db/connection.php');
                     // echo "<button>Add to basket</button>";
                     // add to cart
                     if (isset($_SESSION['userID'])) {
-                        echo "<button  id='add' data-id='$p_id'>Add to Basket</button>";
+                        echo "<button  id='add' onclick='add_database()'>Add to Basket</button>";
                     } else {
-                        echo "<button  id='addcart' onclick='addcart($p_id,1)'>Add to Basket</button>";
+                        echo "<button  id='addcart' onclick='add_session()'>Add to Basket</button>";
                     }
 
                     //add to wishlist
                     // echo "<button >Add to List &#9825; </button>";
                     if (isset($_SESSION['userID'])) {
-                        echo "<button  id='add' data-id='$p_id'>Add to List &#9825; </button>";
+                        echo "<button  id='add' onclick='addtowishlist($p_id)'>Add to List &#9825; </button>";
                     } else {
                         echo "<button  id='addwishlist' onclick='addwishlist($p_id)'>Add to List &#9825;</button>";
                     }
@@ -223,7 +239,7 @@ include('../db/connection.php');
                 <a href="#">See All >> </a>
             </div>
 
-            <div class="product-lists">
+            <div class="productview-lists">
 
                 <?php
                 $sql = 'SELECT * FROM PRODUCT WHERE SHOP_ID = :s_id';
@@ -290,7 +306,7 @@ include('../db/connection.php');
                         echo "<div class='btn' id='outstock' >Add +</div>";
                     } else {
                         if (isset($_SESSION['userID'])) {
-                            echo "<button class='btn' id='add' data-id='$product_id'>Add +</button>";
+                            echo "<button class='btn' id='add' onclick='addtocart($product_id,1)'>Add +</button>";
                         } else {
                             echo "<button class='btn' id='addcart' onclick='addcart($product_id,1)'>Add +</button>";
                         }
@@ -309,44 +325,41 @@ include('../db/connection.php');
     require("footer.php");
     ?>
 
-
-
     <script>
         function viewproduct(p_id) {
             window.location.href = "productview.php?p_id=" + p_id;
         }
 
-        function addquantity() {
-            // var count = 0;
-            var count = document.getElementById('quantity-data').value;
-            alert(count);
+        function removequantity() {
+            const quantity = document.getElementById('quantity').value;
+            if (quantity > 1) {
+                const subtract = parseInt(quantity) - 1;
+                document.getElementById('quantity').value = subtract;
+            }
         }
 
-        function addcart(p_id, quantity) {
-            var product_id = p_id;
-            var quantity = quantity;
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    alert(this.responseText); // replace 'this.responseText' with the actual response text from the server
-                }
-            };
-            xmlhttp.open("GET", "insertremove.php?action=addcart&quantity=" + quantity + "&id=" + product_id, true);
-            xmlhttp.send();
+        function addedquantity() {
+            const quantity = document.getElementById('quantity').value;
+            if(quantity < 20){
+                const addition = parseInt(quantity) + 1;
+                document.getElementById('quantity').value = addition;
+            }
         }
 
-        function addwishlist(p_id) {
-            var product_id = p_id;
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    alert(this.responseText); // replace 'this.responseText' with the actual response text from the server
-                }
-            };
-            xmlhttp.open("GET", "insertremove.php?action=addwishlist&id=" + product_id, true);
-            xmlhttp.send();
+        function add_session(){
+            const product_id = document.getElementById('product_id').value;
+            const quantity = document.getElementById('quantity').value;
+            addcart(product_id,quantity);
         }
+
+        function add_database(){
+            const product_id = document.getElementById('product_id').value;
+            const quantity = document.getElementById('quantity').value;
+            addtocart(product_id,quantity);
+        }
+
     </script>
+    <script src="addremove.js"></script>
 </body>
 
 </html>

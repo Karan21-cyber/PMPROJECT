@@ -45,18 +45,15 @@
                         $stid = oci_parse($connection,$sql);
                         oci_bind_by_name($stid, ':uemail', $_SESSION['email']);
                         oci_bind_by_name($stid, ':verify', $verified);
-                        // oci_bind_by_name($stid, ':urole', $role);
-                        
+
                         unset($_SESSION['otp']);
                         if(oci_execute($stid)){
-                            header('location:login.php');
+                            header('location:createcart.php');
                         }
                     }
     
                     else if($role == 'trader'){
                         $verified='pending';
-    
-                        
                         $sql1 = "UPDATE USER_I SET VERIFY = :verify WHERE EMAIL = :uemail";
                         $stid1 = oci_parse($connection,$sql1);
                         oci_bind_by_name($stid1, ':uemail',$_SESSION['email']);

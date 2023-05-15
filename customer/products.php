@@ -124,7 +124,7 @@ include("../db/connection.php");
 
                         // echo "<a href=''><div class='btn'>Add +</div></a>";
                         if (isset($_SESSION['userID'])) {
-                            echo "<button class='btn' id='add' data-id='$product_id'>Add +</button>";
+                            echo "<button class='btn' id='add' onclick='addtocart($product_id,1)'>Add +</button>";
                         } else {
                             echo "<button class='btn' id='addcart' onclick='addcart($product_id,1)'>Add +</button>";
                         }
@@ -155,9 +155,9 @@ include("../db/connection.php");
                     oci_bind_by_name($stid, ':s_id', $_GET['s_id']);
                 }
                 if (isset($_GET['p_name'])) {
-                    $sql = 'SELECT * FROM PRODUCT WHERE PRODUCT_NAME= :p_name';
+                    $sql = "SELECT * FROM PRODUCT WHERE PRODUCT_NAME LIKE '%' || :product_name || '%'";
                     $stid = oci_parse($connection, $sql);
-                    oci_bind_by_name($stid, ':p_name', $_GET['p_name']);
+                    oci_bind_by_name($stid, ':product_name', $_GET['p_name']);
                 }
 
                 oci_execute($stid);
@@ -222,7 +222,7 @@ include("../db/connection.php");
                     } else {
 
                         if (isset($_SESSION['userID'])) {
-                            echo "<button class='btn' id='add' data-id='$product_id'>Add +</button>";
+                            echo "<button class='btn' id='add' onclick='addtocart($product_id,1)'>Add +</button>";
                         } else {
                             echo "<button class='btn' id='addcart' onclick='addcart($product_id,1)'>Add +</button>";
                         }
@@ -243,25 +243,12 @@ include("../db/connection.php");
     require('footer.php');
     ?>
 
+    <script src="addremove.js"></script>
     <script>
         function viewproduct(p_id) {
             window.location.href = "productview.php?p_id=" + p_id;
         }
-
-        function addcart(p_id, quantity) {
-            var product_id = p_id;
-            var quantity = quantity;
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    alert(this.responseText); // replace 'this.responseText' with the actual response text from the server
-                }
-            };
-            xmlhttp.open("GET", "insertremove.php?action=addcart&quantity=" + quantity + "&id=" + product_id, true);
-            xmlhttp.send();
-        }
     </script>
-
 </body>
 
 </html>
