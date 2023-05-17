@@ -138,7 +138,7 @@ include('../db/connection.php');
                     if ($p_stock <= 0) {
                         echo "out of stock";
                     } else {
-                        echo $p_stock . "KG";
+                        echo $p_stock;
                     }
 
                     ?>
