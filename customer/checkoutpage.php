@@ -29,7 +29,7 @@ if (isset($_POST['placeorder'])) {
     oci_bind_by_name($stids, ":price", $_SESSION['totalprice']);
 
     if (oci_execute($stids)) {
-      $status = "active";
+      // $status = "active";
       // extracting the number of slot for order
       $sqls = "SELECT * FROM COLLECTION_SLOT WHERE COLLECTION_SLOT_ID = :slot_id";
       $stid = oci_parse($connection, $sqls);
@@ -71,15 +71,16 @@ if (isset($_POST['placeorder'])) {
       <h3>Collection Slot</h3>
 
       <form method='post' action=''>
+
         <div class="collection-slot">
           <label>Choose: </label>
           <select name="selectslot" id="selectbox">
             <option value="">Select Collection Slot</option>
             <?php
-            $status = 'active';
-            $sql = "SELECT * FROM COLLECTION_SLOT WHERE COLLECTION_STATUS = :status";
+            // $status = 'active';
+            $sql = "SELECT * FROM COLLECTION_SLOT WHERE NUMBER_OF_ORDER > 0";
             $stid = oci_parse($connection, $sql);
-            oci_bind_by_name($stid, ":status", $status);
+            // oci_bind_by_name($stid, ":status", $status);
             oci_execute($stid);
             while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
               echo "<option value=" . $row['COLLECTION_SLOT_ID'] . ">" . $row['SLOT_TIMING'] . " (" . $row['COLLECTION_DAY'] . ")</option>";
@@ -89,6 +90,11 @@ if (isset($_POST['placeorder'])) {
           </select>
           <?php echo "<span class='error'>" . $err . "</span>"; ?>
         </div>
+
+        <!-- <div class="collection-slot">
+          <label>Choose Date: </label>
+          <input type="date" ></span>
+        </div> -->
 
         <div class="order-container">
           <table>
@@ -140,22 +146,43 @@ if (isset($_POST['placeorder'])) {
         </div>
         <div class="order-summary">
           <h3>Order Summary</h3>
+
           <div class="total-items">
             <h6>Total Items</h6>
             <h6><b><?php echo $_SESSION['cart_num']; ?> </b>(Items)</h6>
           </div>
+
+          <div class="total-items">
+            <h6>Sub Total</h6>
+            <h6><b>&#163; <?php echo $totalprice; ?> </b></h6>
+          </div>
+
+          <div class="total-items">
+            <h6>Tax Amount(15%)</h6>
+            <h6>
+              <b>&#163;
+                <?php
+                $taxamount = $totalprice * 0.15;
+                echo $taxamount;
+                ?>
+              </b>
+            </h6>
+          </div>
+
           <div class="total-items">
             <h6>Total Payment</h6>
             <h6>
               <b>&#163;
                 <?php
                 unset($_SESSION['totalprice']);
-                $_SESSION['totalprice'] = $totalprice;
-                echo $totalprice;
+                $finalamount = $taxamount + $totalprice;
+                $_SESSION['totalprice'] = $finalamount;
+                echo $finalamount;
                 ?>
               </b>
             </h6>
           </div>
+
         </div>
         <div class="place-btn">
           <input type="submit" name="placeorder" value="Place Order" />

@@ -130,8 +130,25 @@ include('../payment/config.php');
                 <td></td>
                 <td></td>
                 <td></td>
+                <td><b>Tax (15%)</b></td>
+                <td><b>&#163; 
+                    <?php $taxamount = $totalprice *0.15;
+                        echo $taxamount;
+                    ?>
+                </b></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td><b>Total Amount</b></td>
-                <td><b>&#163; <?php echo $totalprice ?> </b></td>
+                <td><b>&#163; 
+                <?php 
+                    $finalamount = $taxamount+$totalprice;
+                    echo $finalamount;
+                ?>
+                 </b></td>
             </tr>
         </table>
 
@@ -140,7 +157,7 @@ include('../payment/config.php');
 
                 <input type="hidden" name="business" value="<?php echo PAYPAL_ID; ?>">
 
-                <input type="hidden" name="amount" value="<?php echo $totalprice; ?>">
+                <input type="hidden" name="amount" value="<?php echo $finalamount; ?>">
 
                 <input type="hidden" name="currency_code" value="<?php echo PAYPAL_CURRENCY; ?>">
                 <!-- Specify a Buy Now button. -->
