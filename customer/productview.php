@@ -141,7 +141,6 @@ include('../db/connection.php');
 
                     ?>
                 </span>
-                <input type='hidden' value='<?php echo $p_stock; ?>' id='stocklevel'>
 
                 <div class="product-quantity">
                     <h4>Quantity :</h4>
@@ -150,7 +149,9 @@ include('../db/connection.php');
                         <input type='hidden' value='<?php echo $p_id; ?>' id='product_id'>
                         <input type="text" min="1" value='1' id='quantity' disabled>
                     </h3>
-                    <button onclick="addedquantity()">+</button>
+                    <?php
+                    echo "<button onclick='addedquantity($p_stock)'>+</button>";
+                    ?>
                 </div>
 
                 <div class="buttons">
@@ -372,7 +373,7 @@ include('../db/connection.php');
             // Iterate through each span and add the yellow color
             for (var i = 0; i < starSpans.length; i++) {
                 if (i < rate) {
-                    starSpans[i].style.color = 'yellow';
+                    starSpans[i].style.color = 'orange';
                 } else {
                     starSpans[i].style.color = 'gray'; // Set the remaining stars to black
                 }
@@ -428,9 +429,9 @@ include('../db/connection.php');
             }
         }
 
-        function addedquantity() {
+        function addedquantity(stocklevel) {
             const quantity = document.getElementById('quantity').value;
-            const stocklevel = document.getElementById('stocklevel').value;
+            // const stocklevel = document.getElementById('stocklevel').value;
 
             if (quantity < stocklevel) {
                 const addition = parseInt(quantity) + 1;

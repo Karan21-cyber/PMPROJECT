@@ -146,22 +146,43 @@ if (isset($_POST['placeorder'])) {
         </div>
         <div class="order-summary">
           <h3>Order Summary</h3>
+
           <div class="total-items">
             <h6>Total Items</h6>
             <h6><b><?php echo $_SESSION['cart_num']; ?> </b>(Items)</h6>
           </div>
+
+          <div class="total-items">
+            <h6>Sub Total</h6>
+            <h6><b>&#163; <?php echo $totalprice; ?> </b></h6>
+          </div>
+
+          <div class="total-items">
+            <h6>Tax Amount(15%)</h6>
+            <h6>
+              <b>&#163;
+                <?php
+                $taxamount = $totalprice * 0.15;
+                echo $taxamount;
+                ?>
+              </b>
+            </h6>
+          </div>
+
           <div class="total-items">
             <h6>Total Payment</h6>
             <h6>
               <b>&#163;
                 <?php
                 unset($_SESSION['totalprice']);
-                $_SESSION['totalprice'] = $totalprice;
-                echo $totalprice;
+                $finalamount = $taxamount + $totalprice;
+                $_SESSION['totalprice'] = $finalamount;
+                echo $finalamount;
                 ?>
               </b>
             </h6>
           </div>
+
         </div>
         <div class="place-btn">
           <input type="submit" name="placeorder" value="Place Order" />
