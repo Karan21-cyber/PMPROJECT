@@ -124,9 +124,30 @@ if (isset($_POST['placeorder'])) {
               oci_bind_by_name($stmt, ":pid", $pid);
               oci_execute($stmt);
               while ($data = oci_fetch_array($stmt, OCI_ASSOC)) {
-                $productprice =  $quantity * $data['PRODUCT_PRICE'];
-                $totalprice += $quantity * $data['PRODUCT_PRICE'];
+
+                $product_price = $data['PRODUCT_PRICE'];
                 $productname = $data['PRODUCT_NAME'];
+
+                if (!empty($data['OFFER_ID'])) {
+                  $offer_id = $data['OFFER_ID'];
+
+                  $sql = "SELECT OFFER_PERCENTAGE FROM OFFER WHERE OFFER_ID = :offer_id";
+                  $stmt = oci_parse($connection, $sql);
+                  oci_bind_by_name($stmt, ":offer_id", $offer_id);
+                  oci_execute($stmt);
+                  while ($row = oci_fetch_array($stmt, OCI_ASSOC)) {
+                    $discount = (int)$row['OFFER_PERCENTAGE'];
+                    $discount_price = $product_price - $product_price * ($discount / 100);
+                    $productprice =  $quantity * $discount_price;
+                    $totalprice += $quantity * $discount_price;
+                  }
+                } else {
+                  $discount_price = $product_price;
+                  $productprice =  $quantity * $discount_price;
+                  $totalprice += $quantity * $discount_price;
+                }
+
+
 
                 echo "
                    <tr>
