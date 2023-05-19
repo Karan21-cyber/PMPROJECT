@@ -190,45 +190,75 @@ include('../db/connection.php');
         <div class="product-rating">
             <h3>Add Rating</h3>
             <div class="product-stars">
-                <div class="stars">
-                    <span class="material-symbols-outlined" onclick='rating(1)'>
-                        star
-                    </span>
-                    <span class="material-symbols-outlined" onclick='rating(2)'>
-                        star
-                    </span>
-                    <span class="material-symbols-outlined" onclick='rating(3)'>
-                        star
-                    </span>
-                    <span class="material-symbols-outlined" onclick='rating(4)'>
-                        star
-                    </span>
-                    <span class="material-symbols-outlined" onclick='rating(5)'>
-                        star
-                    </span>
-                </div>
-                <button>Add Stars</button>
-            </div>
+                <?php
+                if (isset($_SESSION['userID'])) {
+                    $user_id = $_SESSION['userID'];
+                } else {
+                    $user_id = '-';
+                }
 
+                echo "
+                <div class='stars'>
+                    <span class='material-symbols-outlined' onclick='rating(1,$p_id,$user_id)'>
+                        star
+                    </span>
+                    <span class='material-symbols-outlined' onclick='rating(2,$p_id,$user_id)'>
+                        star
+                    </span>
+                    <span class='material-symbols-outlined' onclick='rating(3,$p_id,$user_id)'>
+                        star
+                    </span>
+                    <span class='material-symbols-outlined' onclick='rating(4,$p_id,$user_id)'>
+                        star
+                    </span>
+                    <span class='material-symbols-outlined' onclick='rating(5,$p_id,$user_id)'>
+                        star
+                    </span>
+                </div>";
+
+                if (isset($_SESSION['userID'])) {
+                    echo "<button onclick='addrating()'>Add Stars</button>";
+                } else {
+                    echo "<button onclick='login()'>Add Stars</button>";
+                }
+                ?>
+            </div>
         </div>
 
         <!-- reviews -->
-        <div class="product-reviews">
+        <div class='product-reviews'>
             <h3>Product Review:</h3>
 
-            <div class="display-review">
-                <label>Karan Chaudhary: </label>
-                <p>
-                    Lorem ipsum dolor sit amet, consectertur adipiscing elite. cras lacus metus, convallis ut leo nec, tincidunt elite justo, Ut felies
-                    orci, hendrerit a pulvinar et, gravida ac lerom.Quickly Build a Website With Our Unified Platform. Grow Your Business With Shopify®.
-                    Easily Create a Website With Our Unified Platform. Start a Free Trial Now! Drop Shipping Integration. Mobile Commerce Ready. Social
-                    Media Integration. Fraud Prevention.
-                </p>
-            </div>
+            <?php
+            $sql = "SELECT R.*, U.*
+                    FROM REVIEW R
+                    JOIN USER_I U ON R.USER_ID = U.USER_ID
+                    WHERE R.PRODUCT_ID = :product_id";
+            $stid = oci_parse($connection, $sql);
+            oci_bind_by_name($stid, ":product_id", $p_id);
+            oci_execute($stid);
+            while ($row = oci_fetch_array($stid)) {
+                $username = $row['FIRST_NAME'] . " " . $row['LAST_NAME'];
+                $review = $row['REVIEW_DESCRIPTION'];
+                echo "<div class='display-review'>";
+                echo " <label>$username: </label>";
+                echo " <p>$review</p>";
+                echo " </div>";
+            }
+            ?>
 
             <div class="write-review">
                 <textarea name="reviews" id="user_review" Placeholder="Write your reviews....."></textarea>
-                <button onclick='product_review()'>Add Review</button>
+
+                <?php
+
+                if (isset($_SESSION['userID'])) {
+                    echo "<button onclick='product_review($p_id,$user_id)'>Add Review</button>";
+                } else {
+                    echo "<button onclick='login()'>Add Review</button>";
+                }
+
+                ?>
             </div>
         </div>
 
@@ -328,6 +358,66 @@ include('../db/connection.php');
     <script>
         function viewproduct(p_id) {
             window.location.href = "productview.php?p_id=" + p_id;
+        }
+
+        sessionStorage.clear();
+
+        function rating(rate, product_id, user_id) {
+            sessionStorage.setItem("star", rate);
+            sessionStorage.setItem("p_id", product_id);
+            sessionStorage.setItem("u_id", user_id);
+
+            var starSpans = document.querySelectorAll('.stars span');
+
+            // Iterate through each span and add the yellow color
+            for (var i = 0; i < starSpans.length; i++) {
+                if (i < rate) {
+                    starSpans[i].style.color = 'yellow';
+                } else {
+                    starSpans[i].style.color = 'gray'; // Set the remaining stars to black
+                }
+            }
+        }
+
+        // review 
+        function product_review(product_id, user_id) {
+            const review = document.getElementById('user_review').value;
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    alert(this.responseText); // replace 'this.responseText' with the actual response text from the server
+                }
+            };
+            xmlhttp.open(
+                "GET",
+                "addrating.php?action=review&pid=" + product_id + "&uid=" + user_id + "&review=" + review,
+                true
+            );
+            xmlhttp.send();
+        }
+
+
+        // add rating
+        function addrating() {
+            const rate = sessionStorage.getItem('star');
+            const product_id = sessionStorage.getItem('p_id');
+            const user_id = sessionStorage.getItem('u_id');
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    alert(this.responseText); // replace 'this.responseText' with the actual response text from the server
+                }
+            };
+            xmlhttp.open(
+                "GET",
+                "addrating.php?action=rating&pid=" + product_id + "&uid=" + user_id + "&rate=" + rate,
+                true
+            );
+            xmlhttp.send();
+        }
+
+        function login() {
+            window.location.href = "../login.php";
         }
 
         function removequantity() {

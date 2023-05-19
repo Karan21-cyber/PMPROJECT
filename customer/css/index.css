@@ -1176,6 +1176,7 @@ transform: scale(1.2);
 .stars span{
   color: gray;
   padding-block: 5px;
+  cursor: pointer;
 }
 .product-stars button{
   background-color: var(--green);
