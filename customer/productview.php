@@ -12,8 +12,6 @@ include('../db/connection.php');
     <title>Document</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    <!-- <link rel="stylesheet" href="css/productsvi.css" /> -->
-
     <style>
         .product-quantity h3 {
             margin-top: -3px;
@@ -143,12 +141,14 @@ include('../db/connection.php');
 
                     ?>
                 </span>
+                <input type='hidden' value='<?php echo $p_stock; ?>' id='stocklevel'>
+
                 <div class="product-quantity">
                     <h4>Quantity :</h4>
                     <button onclick="removequantity()">-</button>
                     <h3>
-                        <input type="hidden" value='<?php echo $p_id; ?>' id='product_id'>
-                        <input type="text" min="1" max="20" value='1' id='quantity' disabled>
+                        <input type='hidden' value='<?php echo $p_id; ?>' id='product_id'>
+                        <input type="text" min="1" value='1' id='quantity' disabled>
                     </h3>
                     <button onclick="addedquantity()">+</button>
                 </div>
@@ -194,16 +194,16 @@ include('../db/connection.php');
                     <span class="material-symbols-outlined" onclick='rating(1)'>
                         star
                     </span>
-                    <span class="material-symbols-outlined" onclick='rating(1)'>
+                    <span class="material-symbols-outlined" onclick='rating(2)'>
                         star
                     </span>
-                    <span class="material-symbols-outlined" onclick='rating(1)'>
+                    <span class="material-symbols-outlined" onclick='rating(3)'>
                         star
                     </span>
-                    <span class="material-symbols-outlined" onclick='rating(1)'>
+                    <span class="material-symbols-outlined" onclick='rating(4)'>
                         star
                     </span>
-                    <span class="material-symbols-outlined" onclick='rating(1)'>
+                    <span class="material-symbols-outlined" onclick='rating(5)'>
                         star
                     </span>
                 </div>
@@ -340,7 +340,9 @@ include('../db/connection.php');
 
         function addedquantity() {
             const quantity = document.getElementById('quantity').value;
-            if (quantity < 20) {
+            const stocklevel = document.getElementById('stocklevel').value;
+
+            if (quantity < stocklevel) {
                 const addition = parseInt(quantity) + 1;
                 document.getElementById('quantity').value = addition;
             }
