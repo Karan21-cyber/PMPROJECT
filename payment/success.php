@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-echo $_SESSION['userID'] . "\n";
-echo $_SESSION['order_id'] . "\n";
-echo $_SESSION['totalprice'] . "\n";
+// echo $_SESSION['userID'] . "\n";
+// echo $_SESSION['order_id'] . "\n";
+// echo $_SESSION['totalprice'] . "\n";
 
 include("../db/connection.php");
 include_once 'config.php';
