@@ -154,7 +154,7 @@ if (isset($_POST['placeorder'])) {
                    <td class='img'>";
                 echo "<img src=\"../db/uploads/products/" . $data['PRODUCT_IMAGE'] . "\" alt='$productname' /> ";
                 echo "</td>
-                   <td>" . $data['PRODUCT_NAME'] . "</td>
+                   <td>" . ucfirst($data['PRODUCT_NAME']) . "</td>
                    <td>" . $quantity . "</td>
                    <td>&#163; " . $productprice . "</td>
                  </tr>

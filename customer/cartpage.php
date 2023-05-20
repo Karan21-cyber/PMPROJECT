@@ -127,7 +127,7 @@ include('../db/connection.php');
 
             echo " </div>
           <div class='item-info'>
-            <h3>" . $productname . "</h3>
+            <h3>".ucfirst($productname)."</h3>
             <label>CleckFreshMart </label>
           </div>
           <div class='price'>&#163; " . $row['PRODUCT_PRICE'] . "</div>
@@ -195,7 +195,7 @@ include('../db/connection.php');
 
             echo " </div>
           <div class='item-info'>
-            <h3>" . $productname . "</h3>
+            <h3>" . ucfirst($productname) . "</h3>
             <label>CleckFreshMart</label>
           </div>
           <div class='price'>&#163; " . $discount_price . "</div>

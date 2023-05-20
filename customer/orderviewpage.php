@@ -77,8 +77,8 @@ include('../db/connection.php');
             echo "
               <tr>";
             echo "<td class='img'>";
-            echo "<img src=\"../db/uploads/products/" . $product_image. "\" alt='' /> </td>";
-            echo "<td>" . $product_name . "</td>
+            echo "<img src=\"../db/uploads/products/" . $product_image . "\" alt='' /> </td>";
+            echo "<td>" . ucfirst($product_name) . "</td>
                 <td>" . $quantity . "</td>
                 <td>&#163; " . $discount_price . "</td>
                 <td>&#163; " . $productprice . "</td>

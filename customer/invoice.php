@@ -126,7 +126,7 @@ include('../payment/config.php');
                     echo "
                         <tr>
                             <td>" . $count . "</td>
-                            <td>" . $productname . "</td>
+                            <td>" . ucfirst($productname) . "</td>
                             <td>" . $quantity . "</td>
                             <td>&#163;" . $discount_price . "</td>
                             <td>&#163; " . $productprice . "</td>
