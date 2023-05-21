@@ -8,7 +8,7 @@ if (isset($_GET['PayerID'])) {
     $payment_detail = "completed";
 
     $status = "completed";
-    $updatesql = "UPDATE ORDER_I SET STATUS = :ustatus WHERE ORDER_ID = :order_id";
+    $updatesql = "UPDATE ORDER_I SET ORDER_STATUS = :ustatus WHERE ORDER_ID = :order_id";
     $sitd = oci_parse($connection, $updatesql);
     oci_bind_by_name($sitd, ":order_id", $_SESSION['order_id']);
     oci_bind_by_name($sitd, ":ustatus", $status);
