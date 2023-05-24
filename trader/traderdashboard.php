@@ -146,7 +146,6 @@ if (empty($_SESSION['traderID'])) {
                 <div>
                   <ul class="dropdown-menu" id='setting'>
                     <li><a class="dropdown-item" href="traderdashboard.php?cat=UpdateProfile&name=Home&role=trader">Update Profile</a></li>
-                    <li><a class="dropdown-item" href="deactivate/php">Deactivate</a></li>
                   </ul>
                 </div>
               </li>

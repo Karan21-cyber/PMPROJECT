@@ -293,7 +293,7 @@ include('../db/connection.php');
         <div class="display-product">
             <div class="product-view">
                 <h3>More Products From This Shop</h3>
-                <a href="#">See All >> </a>
+                <?php echo "<a href='products.php?s_id=$p_shop'>See All >> </a>" ?>
             </div>
 
             <div class="productview-lists">
@@ -323,7 +323,7 @@ include('../db/connection.php');
 
                     echo "<div class='single' >";
                     echo "<div class='img' onclick='viewproduct($product_id)'>";
-                    echo "<img src=\"../db/uploads/products/" . $product_image . "\" alt='$product_name' /> ";
+                    echo "<img src=\"../db/uploads/products/". $product_image ."\" alt='$product_name' /> ";
                     // echo "<div class='tag'>";
                     if (!empty($product_offer)) {
                         echo "<div class='offer'>Offer</div>";

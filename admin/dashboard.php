@@ -3,23 +3,23 @@ session_start();
 include("../db/connection.php");
 unset($_SESSION['username']);
 
-//  if($_SESSION['adminID']){
-//   $sql = 'SELECT * FROM USER_I WHERE USER_ID= :id ';
-//   $stid = oci_parse($connection,$sql);
+// if ($_SESSION['adminID']) {
+//     $sql = 'SELECT * FROM USER_I WHERE USER_ID= :id ';
+//     $stid = oci_parse($connection, $sql);
 
-//   oci_bind_by_name($stid,':id',$_SESSION['adminID']);
+//     oci_bind_by_name($stid, ':id', $_SESSION['adminID']);
 
-//   oci_execute($stid);
+//     oci_execute($stid);
 
-//   $username='';
-//   while($row = oci_fetch_array($stid,OCI_ASSOC)){
-//     $username = $row['FIRST_NAME'];
-//     $_SESSION['username'] = $username;
-//   }
+//     $username = '';
+//     while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
+//         $username = $row['FIRST_NAME'];
+//         $_SESSION['username'] = $username;
+//     }
 // }
 
-// if(empty($_SESSION['adminID'])){
-//   echo "<script>
+// if (empty($_SESSION['adminID'])) {
+//     echo "<script>
 //     alert('SESSION is EXPIRED Please Login!!!');
 //     document.location.href='../login.php';
 //     </script>";
@@ -245,6 +245,11 @@ unset($_SESSION['username']);
                 </div>
 
                 <div class="home-link">
+                    <span class="material-symbols-outlined">storefront</span>
+                    <a href="dashboard.php?cat=Shop Lists">Shop Lists</a>
+                </div>
+
+                <div class="home-link">
                     <span class="material-symbols-outlined">shopping_basket</span>
                     <a href="dashboard.php?cat=Cart Lists">Cart List</a>
                 </div>
@@ -252,6 +257,11 @@ unset($_SESSION['username']);
                 <div class="home-link">
                     <span class="material-symbols-outlined">favorite</span>
                     <a href="dashboard.php?cat=Wish Lists">Wish List</a>
+                </div>
+
+                <div class="home-link">
+                    <span class="material-symbols-outlined">local_mall</span>
+                    <a href="dashboard.php?cat=Order Lists">Order List</a>
                 </div>
 
                 <div class="logout">
