@@ -31,7 +31,7 @@
             echo "<td>".$cart_id."</td>";
             echo "<td>".ucfirst($user_name)."</td>";
             echo "<td>".$items."</td>";
-            echo "<td></span></a><a href='#' ><span class='material-symbols-outlined p-1 ' >
+            echo "<td></span></a><a href='dashboard.php?cat=Cart Details&cart_id=$cart_id' ><span class='material-symbols-outlined p-1 ' >
             visibility
             </span></a></td>";
             echo "</tr>";

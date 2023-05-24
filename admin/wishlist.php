@@ -35,7 +35,7 @@
             echo "<td>".$wishlist_id."</td>";
             echo "<td>".ucfirst($user_name)."</td>";
             echo "<td>".$items."</td>";
-            echo "<td></span></a><a href='#' ><span class='material-symbols-outlined p-1 ' >
+            echo "<td></span></a><a href='dashboard.php?cat=Wishlist Details&wishlist_id=$wishlist_id' ><span class='material-symbols-outlined p-1 ' >
             visibility
             </span></a></td>";
             echo "</tr>";
