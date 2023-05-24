@@ -9,7 +9,8 @@ include('../db/connection.php');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Product View</title>
+    <link rel="icon" href="../assets/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <style>
@@ -98,12 +99,34 @@ include('../db/connection.php');
                     ?>
 
                     <div class="shop-info">
-                        <?php echo "<h3>$shop_name</h3>"; ?>
-                        <p><?php echo "$shop_desc"; ?></p>
+                        <?php
+                        echo "<h3>" . ucfirst($shop_name) . "</h3>";
+
+                        echo "<p>" . $shop_desc . "</p>";
+                        ?>
                     </div>
                 </div>
                 <!-- product-name -->
-                <h2><?php echo $p_name; ?></h2>
+                <?php
+                $count = $ratecount = $rating = 1;
+                $sql = "SELECT r.*
+                            FROM REVIEW r
+                            JOIN USER_I u ON r.USER_ID = u.USER_ID
+                            WHERE r.PRODUCT_ID = :product_id";
+                $stid = oci_parse($connection, $sql);
+                oci_bind_by_name($stid, ":product_id", $p_id);
+                oci_execute($stid);
+                while ($data = oci_fetch_array($stid)) {
+                    $count += 1;
+                    if (!empty($data['RATING'])) {
+                        $rating = (int)$data['RATING'];
+                    }
+                    $ratecount += $rating;
+                }
+                $ratecount = number_format(($ratecount / $count), 1);
+                echo "<span class='offer_name'>Rating\t($ratecount)</span>";
+                ?>
+                <h2><?php echo ucfirst($p_name); ?></h2>
                 <span>
                     <?php
                     echo $p_quantity;
@@ -239,12 +262,15 @@ include('../db/connection.php');
             oci_bind_by_name($stid, ":product_id", $p_id);
             oci_execute($stid);
             while ($row = oci_fetch_array($stid)) {
-                $username = $row['FIRST_NAME'] . " " . $row['LAST_NAME'];
-                $review = $row['REVIEW_DESCRIPTION'];
-                echo "<div class='display-review'>";
-                echo " <label>$username: </label>";
-                echo " <p>$review</p>";
-                echo " </div>";
+                if (!empty($row['REVIEW_DESCRIPTION'])) {
+                    $username = $row['FIRST_NAME'] . " " . $row['LAST_NAME'];
+                    $review = $row['REVIEW_DESCRIPTION'];
+
+                    echo "<div class='display-review'>";
+                    echo " <label>$username: </label>";
+                    echo " <p>$review</p>";
+                    echo " </div>";
+                }
             }
             ?>
 
@@ -267,7 +293,7 @@ include('../db/connection.php');
         <div class="display-product">
             <div class="product-view">
                 <h3>More Products From This Shop</h3>
-                <a href="#">See All >> </a>
+                <?php echo "<a href='products.php?s_id=$p_shop'>See All >> </a>" ?>
             </div>
 
             <div class="productview-lists">
@@ -295,57 +321,58 @@ include('../db/connection.php');
                     }
 
 
-                    echo "<div class='single'  >";
-                    echo "<div class='img' onclick='viewproduct($product_id)'>";
-                    echo "<img src=\"../db/uploads/products/" . $product_image . "\" alt='$product_name' /> ";
-                    // echo "<div class='tag'>";
-                    if (!empty($product_offer)) {
-                        echo "<div class='offer'>Offer</div>";
-                    } else {
-                        echo "";
-                    }
-                    if ((int)$product_stock <= 0) {
-                        echo "<div class='outofstock'>out of stock</div>";
-                    } else {
-                        echo "";
-                    }
-                    // echo "</div>";    
-                    echo "</div>";
-                    echo "<div class='content'>";
-                    echo "<h5>" . $product_name . "</h5>";
-                    echo "<span class='piece'>" . $product_quantity . " gm</span>";
-                    echo "<div class='price'>";
-                    if ($product_offer) {
-                        // echo $product_offer;
-                        $sql = "SELECT OFFER_PERCENTAGE FROM OFFER WHERE OFFER_ID = :offer_id";
-                        $stmt = oci_parse($connection, $sql);
-                        oci_bind_by_name($stmt, ":offer_id", $product_offer);
-                        oci_execute($stmt);
-                        $row = oci_fetch_array($stmt, OCI_ASSOC);
-                        $discount = (int)$row['OFFER_PERCENTAGE'];
-                        $total_price = $product_price - $product_price * ($discount / 100);
+                    echo "<div class='single' >";
+                        echo "<div class='img' onclick='viewproduct($product_id)'>";
+                            echo "<img src=\"../db/uploads/products/". $product_image ."\" alt='$product_name' /> ";
+                            // echo "<div class='tag'>";
+                            if (!empty($product_offer)) {
+                                echo "<div class='offer'>Offer</div>";
+                            } else {
+                                echo "";
+                            }
+                            if ((int)$product_stock <= 0) {
+                                echo "<div class='outofstock'>out of stock</div>";
+                            } else {
+                                echo "";
+                            }
+                        // echo "</div>";    
+                        echo "</div>";
 
-                        echo "<span class='cut'>&pound;" . $product_price . "</span>";
-                        echo "<span class='main'>&pound;" . $total_price . "</span>";
-                    } else {
-                        echo "<span class='main'>&pound; " . $product_price . "</span>";
-                    }
+                        echo "<div class='content'>";
+                            echo "<h5>" . ucfirst($product_name) . "</h5>";
+                            echo "<span class='piece'>" . $product_quantity . " gm</span>";
+                            echo "<div class='price'>";
+                                if ($product_offer) {
+                                    // echo $product_offer;
+                                    $sql = "SELECT OFFER_PERCENTAGE FROM OFFER WHERE OFFER_ID = :offer_id";
+                                    $stmt = oci_parse($connection, $sql);
+                                    oci_bind_by_name($stmt, ":offer_id", $product_offer);
+                                    oci_execute($stmt);
+                                    $row = oci_fetch_array($stmt, OCI_ASSOC);
+                                    $discount = (int)$row['OFFER_PERCENTAGE'];
+                                    $total_price = $product_price - $product_price * ($discount / 100);
 
-                    echo "</div>";
+                                    echo "<span class='cut'>&pound;" . $product_price . "</span>";
+                                    echo "<span class='main'>&pound;" . $total_price . "</span>";
+                                } else {
+                                    echo "<span class='main'>&pound; " . $product_price . "</span>";
+                                }
 
-                    if ((int)$product_stock <= 0) {
-                        echo "<div class='btn' id='outstock' >Add +</div>";
-                    } else {
-                        if (isset($_SESSION['userID'])) {
-                            echo "<button class='btn' id='add' onclick='addtocart($product_id,1)'>Add +</button>";
-                        } else {
-                            echo "<button class='btn' id='addcart' onclick='addcart($product_id,1)'>Add +</button>";
-                        }
-                    }
-                    echo "</div>";
+                            echo "</div>";
+
+                            if ((int)$product_stock <= 0) {
+                                echo "<div class='btn' id='outstock' >Add +</div>";
+                            } else {
+                                if (isset($_SESSION['userID'])) {
+                                    echo "<button class='btn' id='add' onclick='addtocart($product_id,1)'>Add +</button>";
+                                } else {
+                                    echo "<button class='btn' id='addcart' onclick='addcart($product_id,1)'>Add +</button>";
+                                }
+                            }
+                        echo "</div>";
                     echo "</div>";
                 }
-
+                
                 ?>
             </div>
         </div>
@@ -386,7 +413,8 @@ include('../db/connection.php');
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    alert(this.responseText); // replace 'this.responseText' with the actual response text from the server
+                    window.location.reload();
+                    // alert(this.responseText); // replace 'this.responseText' with the actual response text from the server
                 }
             };
             xmlhttp.open(
@@ -406,7 +434,8 @@ include('../db/connection.php');
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    alert(this.responseText); // replace 'this.responseText' with the actual response text from the server
+                    window.location.reload();
+                    // alert(this.responseText); // replace 'this.responseText' with the actual response text from the server
                 }
             };
             xmlhttp.open(

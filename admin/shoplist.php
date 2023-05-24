@@ -31,7 +31,7 @@
 
             echo "<tr>";
             echo "<td>".$id."</td>";
-            echo "<td>".$shop_name."</td>";
+            echo "<td>".ucfirst($shop_name)."</td>";
             echo "<td>".$category."</td>";
             echo "<td class='imgs'><img src=\"../db/uploads/shops/" . $row['SHOP_LOGO'] . "\" alt=" . $shop_name . " ></td>";
             echo "<td>".$email."</td>";
@@ -39,11 +39,8 @@
             
             if($status == 'pending'){
             echo "<td> <div class='action'>".
-                "<a id='approve' href=updateshop.php?id=$id&action=verified&email=$email>Approve</a>"
-                .
-                "<a id='decline' href=deleteshop.php?id=$id&action=decline&email=$email>Remove</a>".
-                
-                "</div>
+                "<a id='approve' href=updateshop.php?id=$id&action=verified&email=$email>Approve</a>
+                </div>
                 </td>";
             }
             else{
@@ -57,4 +54,3 @@
         echo "</table>";
 
         echo "</div>";
-    ?>

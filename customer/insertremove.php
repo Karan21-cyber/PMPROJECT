@@ -69,36 +69,46 @@ else if ($_GET['action'] == 'removewishlist') {
     }
 }
 
-// update cart
-else if ($_GET['action'] == 'updatecart') {
+else if ($_GET['action'] == 'addupdatecart') {
+    $product_id = $_GET['id']; // Store the product ID
+    $quantity = (int)$_GET['quantity']; // Store the quantity
+    $sql = "SELECT * FROM PRODUCT WHERE PRODUCT_ID = :product_id";
+    $stid = oci_parse($connection,$sql);
+    oci_bind_by_name($stid,":product_id" , $product_id);
+    oci_execute($stid);
+    $data = oci_fetch_array($stid);
+    $stock = $data['STOCK_NUMBER'];
+
     foreach ($_SESSION['cart'] as $key => $value) {
-        if ($value['product_id'] === $_GET['id']) { // receiving data from remove button
-            $_SESSION['cart'][$key] = array('product_id' => $product_id, 'product_quantity' => $quantity);
-            // header('location:viewcart.php');
+        if ($value['product_id'] === $product_id) {
+            if($value['product_quantity'] == $stock){
+                return;
+            }
+
+            $upquantity = (int)$value['product_quantity'] + $quantity;
+            $_SESSION['cart'][$key]['product_quantity'] = $upquantity;
             echo "Successfully updated Cart";
+            break; // Exit the loop after updating the cart
         }
     }
 }
 
-
-
-
-//extracting the cart in cart product
-    // $price = 0;
-    // $total = 0;
-    // if (isset($_SESSION['cart'])) {
-    //     foreach ($_SESSION['cart'] as $key => $value) {
-    //         $price = $value['productPrice'] * $value['productquantity'];
-    //         $total += $value['productPrice'] * $value['productquantity']; {
-    //             // code to display cart items
-    //         }
-    //     }
-    // }
+else if ($_GET['action'] == 'removeupdatecart') {
+    $product_id = $_GET['id']; // Store the product ID
     
-    //  navbar to increase the count number 
-    // $count = 0;
-    // if (isset($_SESSION['cart'])) {
-    //     $count = count($_SESSION['cart']);
-    // }
-
-?>
+    foreach ($_SESSION['cart'] as $key => $value) {
+        if ($value['product_id'] === $product_id) {
+            $upquantity = (int)$value['product_quantity'];
+            
+            if ($upquantity > 1) {
+                $upquantity = $upquantity - 1;
+                $_SESSION['cart'][$key]['product_quantity'] = $upquantity;
+            } else {
+                return; // Remove the item from the cart
+            }
+            
+            echo "Successfully updated Cart";
+            break; // Exit the loop after updating the cart
+        }
+    }
+}

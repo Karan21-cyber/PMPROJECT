@@ -1,57 +1,96 @@
 <?php
 session_start();
 include('../db/connection.php');
-$err = '';
-
+$err = $errdate = '';
 
 if (isset($_POST['placeorder'])) {
   if (empty($_POST['selectslot'])) {
     $err = "Choose the collection Slot";
+  }
+  if (empty($_POST['date'])) {
+    $errdate = "Choose the date";
   } else {
-    unset($_SESSION['collectionslot_id']);
-    unset($_SESSION['order_date']);
+    $selectedDate = strtotime($_POST['date']);
 
-    $currentDate = new DateTime();
-    $formattedDate = $currentDate->format('d/m/y h:i A');
-    $_SESSION['order_date'] = $formattedDate;
+    date_default_timezone_set("Asia/Kathmandu");
+    $currentDate = strtotime(date('m/d/y'));
+    $twentyFourHoursLater = strtotime('+24 hours', $currentDate);
 
-    $collectionslot = $_POST['selectslot'];
-    $_SESSION['collectionslot_id'] = $collectionslot;
+    if ($selectedDate >= $twentyFourHoursLater) {
+      unset($_SESSION['collectionslot_id']);
+      unset($_SESSION['order_date']);
+      unset($_SESSION['collection_date']);
+      unset($_SESSION['order_id']);
+      unset($_SESSION['collect_date']);
 
-    $status = 'pending';
-    $sql = "INSERT INTO ORDER_I (CART_ID,COLLECTION_SLOT_ID,ORDER_DATE,STATUS,NO_OF_ITEM,TOTAL_PRICE) VALUES(:cart_id,:slot_id,:order_date,:statu,:item,:price)";
-    $stids = oci_parse($connection, $sql);
-    oci_bind_by_name($stids, ":cart_id", $_SESSION['cart_id']);
-    oci_bind_by_name($stids, ":slot_id", $_SESSION['collectionslot_id']);
-    oci_bind_by_name($stids, ":order_date", $formattedDate);
-    oci_bind_by_name($stids, ":statu", $status);
-    oci_bind_by_name($stids, ":item", $_SESSION['cart_num']);
-    oci_bind_by_name($stids, ":price", $_SESSION['totalprice']);
 
-    if (oci_execute($stids)) {
-      // $status = "active";
-      // extracting the number of slot for order
-      $sqls = "SELECT * FROM COLLECTION_SLOT WHERE COLLECTION_SLOT_ID = :slot_id";
-      $stid = oci_parse($connection, $sqls);
-      oci_bind_by_name($stid, ":slot_id", $_SESSION['collectionslot_id']);
-      oci_execute($stid);
-      $data = oci_fetch_array($stid);
-      $orderscount = $data['NUMBER_OF_ORDER'];
-      $ordercount = (int)$orderscount - 1;
+      $_SESSION['collect_date'] = date('m/d/Y', $selectedDate);
 
-      // update the number of order in collectionslot 
-      $stql = "UPDATE COLLECTION_SLOT SET NUMBER_OF_ORDER = :num_order WHERE COLLECTION_SLOT_ID = :slot_id";
-      $stmt = oci_parse($connection, $stql);
-      oci_bind_by_name($stmt, ":slot_id", $_SESSION['collectionslot_id']);
-      oci_bind_by_name($stmt, ":num_order", $ordercount);
-      oci_execute($stmt);
+      $collectionslot_id = $_POST['selectslot'];
+      $_SESSION['collectionslot_id'] = $collectionslot_id;
 
-      header('location:insertorder.php');
+      $colsql = "SELECT * FROM COLLECTION_SLOT WHERE COLLECTION_SLOT_ID = :collectionslot_id";
+      $colstmt = oci_parse($connection, $colsql);
+      oci_bind_by_name($colstmt, ":collectionslot_id", $collectionslot_id);
+      oci_execute($colstmt);
+      $data = oci_fetch_assoc($colstmt);
+      $weekday = $data['COLLECTION_DAY'];
 
-      // echo "<script>alert('successfully inserted')</script>";
+      $dateFormatted = date('m/d/Y', $currentDate);
+
+      $_SESSION['collection_date'] = "\nDate:" . $_SESSION['collect_date'] . " \nDay: " .  $weekday . " \nTime: " . $data['SLOT_TIMING'];
+
+      $date = $_POST['date'];
+      $dayOfWeek = date('l', strtotime($date));
+
+      if ($dayOfWeek === $weekday || $dayOfWeek === $weekday || $dayOfWeek === $weekday) {
+
+        $current_Date = new DateTime();
+        $formattedDate = $current_Date->format('m/d/y');
+        $_SESSION['order_date'] = $formattedDate;
+
+        $status = 'pending';
+
+        $sql = "INSERT INTO ORDER_I (CART_ID,COLLECTION_SLOT_ID,ORDER_DATE,ORDER_STATUS,NO_OF_ITEM,TOTAL_PRICE,COLLECTION_DATE) VALUES(:cart_id,:slot_id,:order_date,:statu,:item,:price,:collect_date)";
+        $stids = oci_parse($connection, $sql);
+        oci_bind_by_name($stids, ":cart_id", $_SESSION['cart_id']);
+        oci_bind_by_name($stids, ":slot_id", $_SESSION['collectionslot_id']);
+        oci_bind_by_name($stids, ":order_date", $formattedDate);
+        oci_bind_by_name($stids, ":statu", $status);
+        oci_bind_by_name($stids, ":item", $_SESSION['cart_num']);
+        oci_bind_by_name($stids, ":price", $_SESSION['totalprice']);
+        oci_bind_by_name($stids, ":collect_date", $_SESSION['collect_date']);
+
+        if (oci_execute($stids)) {
+
+          // extracting the number of slot for order
+          $sqls = "SELECT * FROM COLLECTION_SLOT WHERE COLLECTION_SLOT_ID = :slot_id";
+          $stid = oci_parse($connection, $sqls);
+          oci_bind_by_name($stid, ":slot_id", $_SESSION['collectionslot_id']);
+          oci_execute($stid);
+          $data = oci_fetch_array($stid);
+          $orderscount = $data['NUMBER_OF_ORDER'];
+          $ordercount = (int)$orderscount - 1;
+
+          // update the number of order in collectionslot 
+          $stql = "UPDATE COLLECTION_SLOT SET NUMBER_OF_ORDER = :num_order WHERE COLLECTION_SLOT_ID = :slot_id";
+          $stmt = oci_parse($connection, $stql);
+          oci_bind_by_name($stmt, ":slot_id", $_SESSION['collectionslot_id']);
+          oci_bind_by_name($stmt, ":num_order", $ordercount);
+          oci_execute($stmt);
+
+          header('location:insertorder.php');
+        }
+      } else {
+
+        $errdate = "Please select a date on Wednesday, Thursday, or Friday.";
+      }
+    } else {
+      $errdate = "Please select a date at least 24 hours in the future.";
     }
   }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,7 +100,7 @@ if (isset($_POST['placeorder'])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
-  <link rel="stylesheet" href="css/checkouts.css" />
+  <link rel="stylesheet" href="css/checkout.css" />
 </head>
 
 <body>
@@ -73,7 +112,8 @@ if (isset($_POST['placeorder'])) {
       <form method='post' action=''>
 
         <div class="collection-slot">
-          <label>Choose: </label>
+
+          <label>Choose slot: </label>
           <select name="selectslot" id="selectbox">
             <option value="">Select Collection Slot</option>
             <?php
@@ -87,15 +127,15 @@ if (isset($_POST['placeorder'])) {
             }
 
             ?>
+
           </select>
-          <?php echo "<span class='error'>" . $err . "</span>"; ?>
         </div>
-
-        <!-- <div class="collection-slot">
+        <?php echo "<span class='error'>" . $err . "</span>"; ?>
+        <div class="collection-slot">
           <label>Choose Date: </label>
-          <input type="date" ></span>
-        </div> -->
-
+          <input type="date" id="date" name="date" />
+        </div>
+        <?php echo "<span class='error'>" . $errdate . "</span>"; ?>
         <div class="order-container">
           <table>
             <!-- table heading -->
@@ -124,16 +164,37 @@ if (isset($_POST['placeorder'])) {
               oci_bind_by_name($stmt, ":pid", $pid);
               oci_execute($stmt);
               while ($data = oci_fetch_array($stmt, OCI_ASSOC)) {
-                $productprice =  $quantity * $data['PRODUCT_PRICE'];
-                $totalprice += $quantity * $data['PRODUCT_PRICE'];
+
+                $product_price = $data['PRODUCT_PRICE'];
                 $productname = $data['PRODUCT_NAME'];
+
+                if (!empty($data['OFFER_ID'])) {
+                  $offer_id = $data['OFFER_ID'];
+
+                  $sql = "SELECT OFFER_PERCENTAGE FROM OFFER WHERE OFFER_ID = :offer_id";
+                  $stmt = oci_parse($connection, $sql);
+                  oci_bind_by_name($stmt, ":offer_id", $offer_id);
+                  oci_execute($stmt);
+                  while ($row = oci_fetch_array($stmt, OCI_ASSOC)) {
+                    $discount = (int)$row['OFFER_PERCENTAGE'];
+                    $discount_price = $product_price - $product_price * ($discount / 100);
+                    $productprice =  $quantity * $discount_price;
+                    $totalprice += $quantity * $discount_price;
+                  }
+                } else {
+                  $discount_price = $product_price;
+                  $productprice =  $quantity * $discount_price;
+                  $totalprice += $quantity * $discount_price;
+                }
+
+
 
                 echo "
                    <tr>
                    <td class='img'>";
                 echo "<img src=\"../db/uploads/products/" . $data['PRODUCT_IMAGE'] . "\" alt='$productname' /> ";
                 echo "</td>
-                   <td>" . $data['PRODUCT_NAME'] . "</td>
+                   <td>" . ucfirst($data['PRODUCT_NAME']) . "</td>
                    <td>" . $quantity . "</td>
                    <td>&#163; " . $productprice . "</td>
                  </tr>

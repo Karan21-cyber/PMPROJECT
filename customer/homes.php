@@ -8,8 +8,11 @@
   <div class="trending-container">
 
     <?php
-    $sql = "SELECT * FROM PRODUCT WHERE ROWNUM <= 8";
+    $verified = 'verified';
+
+    $sql = "SELECT * FROM PRODUCT WHERE ROWNUM <= 8 AND PRODUCT_STATUS = :verify";
     $stmt = oci_parse($connection, $sql);
+    oci_bind_by_name($stmt,":verify" , $verified);
     oci_execute($stmt);
 
     while ($row = oci_fetch_array($stmt, OCI_ASSOC)) {
@@ -24,7 +27,7 @@
       echo "<div class='image' onclick='viewproduct($product_id)'>";
       echo "<img src=\"../db/uploads/products/" . $product_image . "\" alt='$product_name' /> ";
       echo "</div>";
-      echo "<h5 class='title'>$product_name</h5>";
+      echo "<h5 class='title'>" . ucfirst($product_name) . "</h5>";
       echo "<span class='size'>$product_quantity gm</span>";
       echo "<p class='price'>&pound; $product_price</p>";
       echo "<input type='hidden' data-quantity='1' >";
@@ -47,9 +50,9 @@
   <div class="shop-container">
     <?php
     $status = 'verified';
-    $sql = "SELECT * FROM SHOP WHERE ROWNUM <= 7 AND STATUS = :verify";
+    $sql = "SELECT * FROM SHOP WHERE  STATUS = :verify";
     $stmt = oci_parse($connection, $sql);
-    oci_bind_by_name($stmt , ":verify" , $status);
+    oci_bind_by_name($stmt, ":verify", $status);
     oci_execute($stmt);
 
     while ($row = oci_fetch_array($stmt, OCI_ASSOC)) {
@@ -68,7 +71,7 @@
       echo "<img src=\"../db/uploads/shops/" . $shop_logo . "\" class='logo-img' alt='$shop_name' /> ";
       echo "</div>";
       echo "<div class='summary'>";
-      echo "<h2>" . $shop_name . "</h2>";
+      echo "<h2>" . ucfirst($shop_name) . "</h2>";
       echo "<p>$shop_desc</p>";
       echo "</div>";
       echo "</div>";
@@ -91,9 +94,10 @@
     oci_execute($stmt);
     while ($row = oci_fetch_array($stmt, OCI_ASSOC)) {
       $offer_id = $row['OFFER_ID'];
-      $sql = 'SELECT * FROM PRODUCT WHERE OFFER_ID= :off_id AND ROWNUM <= 7';
+      $sql = 'SELECT * FROM PRODUCT WHERE OFFER_ID= :off_id AND ROWNUM <= 7 AND PRODUCT_STATUS = :verify';
       $stid = oci_parse($connection, $sql);
       oci_bind_by_name($stid, ':off_id', $offer_id);
+      oci_bind_by_name($stid,":verify" , $verified);
       oci_execute($stid);
 
       while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
@@ -110,7 +114,7 @@
         echo "<div class='offer'>Offer</div>";
         echo "</div>";
         echo "<div class='content'>";
-        echo "<h5>$product_name</h5>";
+        echo "<h5>" . ucfirst($product_name) . "</h5>";
         echo "<span class='piece'> $product_quantity gm</span>";
 
         echo "<div class='price'>";
@@ -158,8 +162,10 @@
 
       <?php
 
-      $sql = 'SELECT * FROM PRODUCT WHERE ROWNUM <= 25';
+      $sql = 'SELECT * FROM PRODUCT WHERE ROWNUM <= 25 AND PRODUCT_STATUS = :verify';
       $stid = oci_parse($connection, $sql);
+      oci_bind_by_name($stid,":verify" , $verified);
+
       oci_execute($stid);
 
       while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
@@ -193,7 +199,7 @@
         }
         echo "</div>";
         echo "<div class='content'>";
-        echo "<h5>" . $product_name . "</h5>";
+        echo "<h5>" . ucfirst($product_name) . "</h5>";
         echo "<span class='piece'>" . $product_quantity . " gm</span>";
         echo "<div class='price'>";
         if ($product_offer) {
