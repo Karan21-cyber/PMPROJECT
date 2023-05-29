@@ -1,5 +1,7 @@
 <?php
 include("../db/connection.php");
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -101,7 +103,7 @@ include("../db/connection.php");
                 if ($order_status == 'pending') {
                     echo "<td>
                         <div class='action'>
-                            <a id='decline' href='deletetrader.php?id=$order_id&action=decline'>Remove</a>
+                            <a id='decline' href='deleteorder.php?order_id=$order_id'>Remove</a>
                         </div>
                         </td>";
                 }
