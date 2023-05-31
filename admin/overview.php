@@ -103,7 +103,7 @@ include("../db/connection.php");
             </div>
 
 
-            <a href="http://localhost:8080/apex/">
+            <a href="http://localhost:8080/apex/f?p=102:9999:9504487529204">
                 <!-- <div class="report"> -->
                 <div class="report-info">
                     <h3>Report</h3>
